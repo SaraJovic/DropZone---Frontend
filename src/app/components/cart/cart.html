@@ -1,0 +1,62 @@
+<div class="container py-5">
+  <h2 class="section-title mb-5">SHOPPING<span class="text-volt">/</span>CART</h2>
+
+  @if (cart && cart.items && cart.items.length > 0) {
+    <div class="row g-4">
+      <!-- Cart Items List -->
+      <div class="col-lg-8">
+        @for (item of cart.items; track item.id) {
+          <div class="dz-card p-4 mb-3 d-flex flex-column flex-sm-row justify-content-between align-items-sm-center gap-3">
+            <div>
+              <h5 class="product-title mb-1">{{ item.productName }}</h5>
+              <p class="text-muted font-display text-uppercase mb-2" style="font-size: 0.75rem; letter-spacing: 0.05em;">
+                {{ item.size }} / {{ item.color }}
+              </p>
+              <div class="font-display" style="font-size: 0.85rem; color: var(--text-secondary);">
+                QTY: <span class="text-white">{{ item.quantity }}</span>
+              </div>
+            </div>
+            <div class="text-sm-end d-flex flex-row flex-sm-column justify-content-between align-items-center align-items-sm-end gap-3">
+              <p class="fw-bold font-display text-volt mb-0" style="font-size: 1.15rem; text-shadow: var(--shadow-volt);">
+                ${{ (item.price * item.quantity).toFixed(2) }}
+              </p>
+              <button class="btn-danger-custom px-3 py-1.5" style="font-size: 0.75rem;" (click)="removeItem(item.id)">
+                REMOVE
+              </button>
+            </div>
+          </div>
+        }
+        <button class="btn-danger-custom px-4 py-2 mt-2" (click)="clearCart()">CLEAR CART</button>
+      </div>
+
+      <!-- Order Summary Card -->
+      <div class="col-lg-4">
+        <div class="dz-card p-4">
+          <h5 class="font-display fw-bold mb-4 text-uppercase" style="letter-spacing: 0.05em; border-left: 2px solid var(--accent-volt); padding-left: 0.5rem;">
+            ORDER SUMMARY
+          </h5>
+          <div class="d-flex justify-content-between font-display mb-3">
+            <span class="text-secondary">SUBTOTAL:</span>
+            <span>${{ cart.totalPrice.toFixed(2) }}</span>
+          </div>
+          <div class="d-flex justify-content-between font-display mb-4">
+            <span class="text-secondary">SHIPPING:</span>
+            <span class="text-volt">FREE</span>
+          </div>
+          <hr style="border-color: var(--border-color);">
+          <div class="d-flex justify-content-between font-display fw-bold mb-4" style="font-size: 1.2rem;">
+            <span>TOTAL:</span>
+            <span class="text-volt" style="text-shadow: var(--shadow-volt);">${{ cart.totalPrice.toFixed(2) }}</span>
+          </div>
+          <button class="btn-volt w-100" (click)="goToCheckout()">PROCEED TO CHECKOUT</button>
+        </div>
+      </div>
+    </div>
+  } @else {
+    <div class="text-center py-5 dz-card p-5">
+      <i class="bi bi-cart-x text-muted" style="font-size: 3rem;"></i>
+      <h4 class="text-muted mt-3 mb-4">YOUR CART IS CURRENTLY EMPTY</h4>
+      <a routerLink="/products" class="btn-volt-outline text-decoration-none d-inline-block">CONTINUE SHOPPING</a>
+    </div>
+  }
+</div>

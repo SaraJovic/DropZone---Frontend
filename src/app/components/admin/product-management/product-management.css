@@ -1,0 +1,4 @@
+/* Product management specific styling rules */
+.dz-card {
+  transition: var(--transition);
+}

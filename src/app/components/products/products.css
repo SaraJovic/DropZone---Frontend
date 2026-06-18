@@ -1,0 +1,74 @@
+.section-title {
+  font-size: 2rem;
+  font-weight: 900;
+  letter-spacing: -0.05em;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.dz-product-img {
+  height: 280px;
+  object-fit: cover;
+  border-bottom: 1px solid var(--border-color);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.dz-card:hover .dz-product-img {
+  transform: scale(1.03);
+}
+
+.dz-no-image {
+  height: 280px;
+  background-color: rgba(255, 255, 255, 0.01);
+  border-bottom: 1px solid var(--border-color);
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
+}
+
+.price-tag {
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+  background-color: #000000;
+  color: #FFFFFF;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1rem;
+  padding: 0.4rem 0.8rem;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
+  z-index: 5;
+}
+.dz-card:hover .price-tag {
+  border-color: var(--accent-volt);
+  color: var(--accent-volt);
+  box-shadow: var(--shadow-volt);
+}
+
+.category-lbl {
+  font-family: var(--font-display);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+}
+
+.product-title {
+  font-size: 1.15rem;
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  color: #FFFFFF;
+}
+
+.pagination-indicator {
+  font-weight: 700;
+  font-size: 0.85rem;
+  letter-spacing: 0.05em;
+  color: var(--text-secondary);
+  padding: 0 1rem;
+}

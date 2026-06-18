@@ -1,0 +1,4 @@
+/* Checkout page styling */
+.dz-card {
+  transition: var(--transition);
+}

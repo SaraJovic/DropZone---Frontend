@@ -1,0 +1,4 @@
+/* Dashboard specific styling rules */
+.dz-card {
+  transition: var(--transition);
+}

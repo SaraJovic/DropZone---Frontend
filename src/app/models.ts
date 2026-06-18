@@ -1,0 +1,124 @@
+export interface User {
+  id: number;
+  firstName: string;
+  lastName: string;
+  email: string;
+  role: 'CUSTOMER' | 'ADMIN';
+}
+
+export interface AuthResponse {
+  token: string;
+  user: User;
+}
+
+export interface LoginRequest {
+  email: string;
+  password: string;
+}
+
+export interface RegisterRequest {
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+}
+
+export interface Category {
+  id: number;
+  name: string;
+}
+
+export interface ProductImage {
+  id: number;
+  imageUrl: string;
+  isPrimary: boolean;
+}
+
+export interface ProductVariant {
+  id: number;
+  size: string;
+  color: string;
+  stockQuantity: number;
+}
+
+export interface Product {
+  id: number;
+  name: string;
+  description: string;
+  price: number;
+  categoryId: number;
+  categoryName: string;
+  images: ProductImage[];
+  variants: ProductVariant[];
+}
+
+export interface ProductPage {
+  content: Product[];
+  totalPages: number;
+  totalElements: number;
+}
+
+export interface CartItem {
+  id: number;
+  productName: string;
+  size: string;
+  color: string;
+  quantity: number;
+  price: number;
+}
+
+export interface Cart {
+  id: number;
+  items: CartItem[];
+  totalPrice: number;
+}
+
+export interface AddToCartRequest {
+  productVariantId: number;
+  quantity: number;
+}
+
+export interface OrderItem {
+  id: number;
+  productName: string;
+  size: string;
+  color: string;
+  quantity: number;
+  priceAtPurchase: number;
+}
+
+export type OrderStatus = 'PENDING' | 'PROCESSING' | 'SHIPPED' | 'DELIVERED' | 'CANCELLED';
+
+export interface Order {
+  id: number;
+  user?: User;
+  items: OrderItem[];
+  totalPrice: number;
+  status: OrderStatus;
+  shippingAddress: string;
+  createdAt: string;
+}
+
+export interface CreateOrderRequest {
+  shippingAddress: string;
+}
+
+export interface WishlistItem {
+  id: number;
+  productId: number;
+  productName: string;
+  price: number;
+  primaryImageUrl: string | null;
+}
+
+export interface Wishlist {
+  id: number;
+  items: WishlistItem[];
+}
+
+export interface NewProduct {
+  name: string;
+  description: string;
+  price: number;
+  categoryId: number | null;
+}

@@ -1,0 +1,107 @@
+.hero-section {
+  position: relative;
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #050505;
+  background-image: 
+    radial-gradient(circle at 10% 20%, rgba(204, 255, 0, 0.05) 0%, transparent 40%),
+    radial-gradient(circle at 90% 80%, rgba(0, 212, 255, 0.05) 0%, transparent 40%),
+    linear-gradient(rgba(255, 255, 255, 0.01) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.01) 1px, transparent 1px);
+  background-size: 100% 100%, 100% 100%, 40px 40px, 40px 40px;
+  border-bottom: 1px solid var(--border-color);
+  padding: 4rem 1rem;
+}
+
+.hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle, transparent 20%, #0A0A0A 90%);
+  z-index: 1;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 800px;
+}
+
+.badge-tag {
+  display: inline-block;
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  color: #000000;
+  background-color: #FFFFFF;
+  padding: 0.4rem 0.8rem;
+  border-radius: var(--radius);
+  margin-bottom: 1.5rem;
+}
+
+.hero-title {
+  font-size: 6.5rem;
+  font-weight: 950;
+  letter-spacing: -0.06em;
+  line-height: 0.85;
+  margin-bottom: 1.5rem;
+  text-shadow: 0 0 40px rgba(255, 255, 255, 0.05);
+}
+
+.hero-subtitle {
+  font-size: 1.25rem;
+  font-weight: 400;
+  color: var(--text-secondary);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Feature cards custom styling */
+.icon-wrapper {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
+  margin-bottom: 1.5rem;
+  font-size: 1.75rem;
+  transition: var(--transition);
+}
+.dz-card:hover .icon-wrapper {
+  border-color: var(--accent-volt);
+  background: rgba(204, 255, 0, 0.05);
+  box-shadow: var(--shadow-volt);
+}
+
+.feature-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+  letter-spacing: -0.01em;
+}
+
+.feature-desc {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+@media (max-width: 767.98px) {
+  .hero-title {
+    font-size: 4rem;
+  }
+  .hero-subtitle {
+    font-size: 1.1rem;
+  }
+  .hero-section {
+    min-height: 65vh;
+  }
+}

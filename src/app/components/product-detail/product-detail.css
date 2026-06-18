@@ -1,0 +1,83 @@
+.dz-detail-img {
+  width: 100%;
+  max-height: 550px;
+  object-fit: cover;
+  border-radius: var(--radius);
+}
+
+.dz-detail-no-image {
+  height: 450px;
+  background-color: rgba(255, 255, 255, 0.01);
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1rem;
+  letter-spacing: 0.15em;
+  border-radius: var(--radius);
+}
+
+.product-detail-title {
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
+  color: #FFFFFF;
+}
+
+.price-detail-tag {
+  font-size: 2rem;
+  font-weight: 900;
+  color: var(--accent-volt);
+  text-shadow: var(--shadow-volt);
+}
+
+.section-sub-title {
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  color: var(--text-secondary);
+  margin-bottom: 0.75rem;
+  border-left: 2px solid var(--accent-volt);
+  padding-left: 0.5rem;
+}
+
+.description-text {
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* Variant Selector Button */
+.dz-btn-variant {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--border-color);
+  color: #FFFFFF;
+  padding: 0.6rem 1.2rem;
+  border-radius: var(--radius);
+  font-weight: 700;
+  font-size: 0.8rem;
+  letter-spacing: 0.05em;
+  transition: var(--transition);
+}
+.dz-btn-variant:hover:not(:disabled) {
+  border-color: rgba(255, 255, 255, 0.3);
+}
+.dz-btn-variant.active {
+  background: #FFFFFF !important;
+  color: #000000 !important;
+  border-color: #FFFFFF !important;
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.15);
+}
+.dz-btn-variant:disabled {
+  opacity: 0.25;
+  cursor: not-allowed;
+  text-decoration: line-through;
+}
+
+.out-of-stock-lbl {
+  font-size: 0.65rem;
+  opacity: 0.5;
+  margin-left: 0.25rem;
+}

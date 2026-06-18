@@ -1,0 +1,79 @@
+<div class="container py-5">
+  @if (product) {
+    <div class="row g-5">
+      <!-- Image Gallery -->
+      <div class="col-md-6">
+        <div class="dz-card p-2" style="background: rgba(255, 255, 255, 0.01) !important;">
+          @if (product.images && product.images.length > 0) {
+            <img [src]="product.images[0].imageUrl" class="img-fluid dz-detail-img" [alt]="product.name">
+          } @else {
+            <div class="dz-detail-no-image font-display">
+              NO IMAGE AVAILABLE
+            </div>
+          }
+        </div>
+      </div>
+
+      <!-- Info Column -->
+      <div class="col-md-6 d-flex flex-column justify-content-between">
+        <div>
+          <span class="text-volt font-display text-uppercase tracking-widest fw-bold" style="font-size: 0.75rem; letter-spacing: 0.15em;">
+            {{ product.categoryName }}
+          </span>
+          <h1 class="display-5 mt-2 mb-3 product-detail-title">{{ product.name }}</h1>
+          
+          <div class="price-detail-tag font-display mb-4">${{ product.price }}</div>
+          
+          <div class="description-section mb-4">
+            <h6 class="section-sub-title">DESCRIPTION</h6>
+            <p class="description-text">{{ product.description }}</p>
+          </div>
+
+          <!-- Variants -->
+          <div class="mb-4">
+            <h6 class="section-sub-title">SELECT SIZE & COLOR</h6>
+            <div class="d-flex flex-wrap gap-2">
+              @for (variant of product.variants; track variant.id) {
+                <button class="dz-btn-variant font-display"
+                  [class.active]="selectedVariant?.id === variant.id"
+                  [disabled]="variant.stockQuantity === 0"
+                  (click)="selectVariant(variant)">
+                  {{ variant.size | uppercase }} / {{ variant.color | uppercase }}
+                  @if (variant.stockQuantity === 0) {
+                    <span class="out-of-stock-lbl">(OUT OF STOCK)</span>
+                  }
+                </button>
+              }
+            </div>
+          </div>
+
+          <!-- Quantity -->
+          <div class="mb-4">
+            <h6 class="section-sub-title">QUANTITY</h6>
+            <div class="d-flex align-items-center">
+              <input type="number" class="form-control text-center font-display" style="width: 80px;" [(ngModel)]="quantity" min="1">
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <!-- Messages -->
+          @if (successMessage) {
+            <div class="alert alert-success py-2 px-3 mb-3">{{ successMessage | uppercase }}</div>
+          }
+          @if (errorMessage) {
+            <div class="alert alert-danger py-2 px-3 mb-3">{{ errorMessage | uppercase }}</div>
+          }
+
+          <!-- Action Buttons -->
+          <div class="d-flex gap-3">
+            <button class="btn-volt flex-grow-1" (click)="addToCart()">ADD TO CART</button>
+            <button class="btn-volt-outline" (click)="addToWishlist()">
+              <i class="bi bi-heart"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  }
+</div>

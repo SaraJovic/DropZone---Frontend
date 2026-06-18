@@ -1,0 +1,236 @@
+/* Brutalist Streetwear Design System */
+:root {
+  --bg-primary: #0A0A0A;
+  --bg-secondary: #0D0D0D;
+  --bg-card: rgba(255, 255, 255, 0.02);
+  --bg-glass: rgba(13, 13, 13, 0.7);
+  --accent-volt: #CCFF00;     /* Volt green primary accent */
+  --accent-blue: #00D4FF;     /* Electric blue secondary accent */
+  --accent-blue-hover: #00B1D6;
+  --text-primary: #FFFFFF;
+  --text-secondary: rgba(255, 255, 255, 0.5);
+  --text-muted: rgba(255, 255, 255, 0.35);
+  --border-color: rgba(255, 255, 255, 0.08);
+  --border-color-hover: rgba(204, 255, 0, 0.3);
+  --radius: 2px;
+  --font-body: 'Inter', sans-serif;
+  --font-display: 'Outfit', sans-serif;
+  --transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  --shadow-volt: 0 0 15px rgba(204, 255, 0, 0.25);
+  --shadow-blue: 0 0 15px rgba(0, 212, 255, 0.25);
+}
+
+/* Global Reset & Body */
+body {
+  background-color: var(--bg-primary) !important;
+  color: var(--text-primary) !important;
+  font-family: var(--font-body);
+  letter-spacing: -0.01em;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4, h5, h6, .navbar-brand, .display-4 {
+  font-family: var(--font-display);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+}
+
+/* Scrollbar Customization */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-volt);
+}
+
+/* Glassmorphism Card Style */
+.dz-card {
+  background: var(--bg-glass) !important;
+  border: 1px solid var(--border-color) !important;
+  border-radius: var(--radius) !important;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: var(--transition);
+  color: var(--text-primary);
+}
+.dz-card:hover {
+  border-color: rgba(255, 255, 255, 0.15) !important;
+}
+.dz-card.dz-card-hover:hover {
+  border-color: var(--accent-volt) !important;
+  box-shadow: var(--shadow-volt);
+  transform: translateY(-2px);
+}
+
+/* Streetwear Buttons */
+.btn-volt {
+  background-color: var(--accent-volt) !important;
+  color: #000000 !important;
+  border: 1px solid var(--accent-volt) !important;
+  border-radius: var(--radius) !important;
+  font-family: var(--font-display);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0.6rem 1.5rem;
+  transition: var(--transition);
+}
+.btn-volt:hover:not(:disabled) {
+  background-color: #000000 !important;
+  color: var(--accent-volt) !important;
+  box-shadow: var(--shadow-volt);
+}
+.btn-volt:disabled {
+  background-color: rgba(255, 255, 255, 0.05) !important;
+  border-color: transparent !important;
+  color: rgba(255, 255, 255, 0.25) !important;
+  cursor: not-allowed;
+}
+
+.btn-volt-outline {
+  background-color: transparent !important;
+  color: var(--text-primary) !important;
+  border: 1px solid var(--border-color) !important;
+  border-radius: var(--radius) !important;
+  font-family: var(--font-display);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0.6rem 1.5rem;
+  transition: var(--transition);
+}
+.btn-volt-outline:hover:not(:disabled) {
+  border-color: var(--accent-volt) !important;
+  color: var(--accent-volt) !important;
+  box-shadow: var(--shadow-volt);
+}
+
+.btn-danger-custom {
+  background-color: rgba(255, 68, 68, 0.1) !important;
+  color: #FF4444 !important;
+  border: 1px solid rgba(255, 68, 68, 0.2) !important;
+  border-radius: var(--radius) !important;
+  font-family: var(--font-display);
+  font-weight: 700;
+  text-transform: uppercase;
+  transition: var(--transition);
+}
+.btn-danger-custom:hover {
+  background-color: #FF4444 !important;
+  color: #000000 !important;
+  box-shadow: 0 0 15px rgba(255, 68, 68, 0.3);
+}
+
+/* Form inputs & selects override */
+.form-control, .form-select {
+  background-color: rgba(255, 255, 255, 0.03) !important;
+  border: 1px solid var(--border-color) !important;
+  border-radius: var(--radius) !important;
+  color: var(--text-primary) !important;
+  font-family: var(--font-body);
+  transition: var(--transition);
+}
+.form-control:focus, .form-select:focus {
+  background-color: rgba(255, 255, 255, 0.05) !important;
+  border-color: var(--accent-volt) !important;
+  box-shadow: 0 0 8px rgba(204, 255, 0, 0.15) !important;
+  outline: none;
+}
+.form-control::placeholder {
+  color: var(--text-muted);
+}
+.form-control:disabled, .form-select:disabled {
+  background-color: rgba(255, 255, 255, 0.01) !important;
+  border-color: rgba(255, 255, 255, 0.03) !important;
+  color: var(--text-muted) !important;
+}
+
+/* Badges styling */
+.badge-status {
+  border-radius: 0px !important;
+  font-family: var(--font-display);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0.35em 0.65em;
+}
+
+.bg-pending { background-color: rgba(255, 193, 7, 0.1); color: #FFC107; border: 1px solid rgba(255, 193, 7, 0.2); }
+.bg-processing { background-color: rgba(0, 212, 255, 0.1); color: var(--accent-blue); border: 1px solid rgba(0, 212, 255, 0.2); }
+.bg-shipped { background-color: rgba(204, 255, 0, 0.1); color: var(--accent-volt); border: 1px solid rgba(204, 255, 0, 0.2); }
+.bg-delivered { background-color: rgba(40, 167, 69, 0.1); color: #28a745; border: 1px solid rgba(40, 167, 69, 0.2); }
+.bg-cancelled { background-color: rgba(220, 53, 69, 0.1); color: #dc3545; border: 1px solid rgba(220, 53, 69, 0.2); }
+
+/* Tables overrides */
+.table {
+  color: var(--text-primary) !important;
+  background-color: transparent !important;
+}
+.table th {
+  font-family: var(--font-display);
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  border-bottom: 2px solid var(--border-color) !important;
+}
+.table td {
+  border-bottom: 1px solid var(--border-color);
+  background-color: transparent !important;
+  color: var(--text-primary) !important;
+}
+.table-hover tbody tr:hover td {
+  background-color: rgba(255, 255, 255, 0.02) !important;
+}
+
+/* Alerts overrides */
+.alert-success {
+  background-color: rgba(40, 167, 69, 0.1) !important;
+  color: #28a745 !important;
+  border: 1px solid rgba(40, 167, 69, 0.2) !important;
+  border-radius: var(--radius);
+}
+.alert-danger {
+  background-color: rgba(220, 53, 69, 0.1) !important;
+  color: #dc3545 !important;
+  border: 1px solid rgba(220, 53, 69, 0.2) !important;
+  border-radius: var(--radius);
+}
+
+/* Streetwear branding styling details */
+.text-glow-volt {
+  text-shadow: 0 0 10px rgba(204, 255, 0, 0.4);
+}
+.text-glow-blue {
+  text-shadow: 0 0 10px rgba(0, 212, 255, 0.4);
+}
+.text-volt {
+  color: var(--accent-volt) !important;
+}
+.text-blue {
+  color: var(--accent-blue) !important;
+}
+
+/* Dropdown styling */
+.dropdown-menu {
+  background-color: var(--bg-secondary) !important;
+  border: 1px solid var(--border-color) !important;
+  border-radius: var(--radius) !important;
+}
+.dropdown-item {
+  color: var(--text-primary) !important;
+  transition: var(--transition);
+}
+.dropdown-item:hover {
+  background-color: rgba(255, 255, 255, 0.05) !important;
+  color: var(--accent-volt) !important;
+}

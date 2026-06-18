@@ -1,0 +1,69 @@
+<div class="container py-5">
+  <div class="d-flex justify-content-between align-items-baseline mb-5 flex-wrap gap-3">
+    <h2 class="section-title">PRODUCTS<span class="text-volt">/</span>ALL</h2>
+    <span class="text-muted text-uppercase font-display" style="font-size: 0.75rem; letter-spacing: 0.1em;">
+      {{ products.length }} DROPS FOUND
+    </span>
+  </div>
+
+  <!-- Filters Panel -->
+  <div class="row g-3 mb-5">
+    <div class="col-md-7">
+      <div class="d-flex">
+        <input type="text" class="form-control me-2" placeholder="SEARCH PRODUCTS..."
+               [(ngModel)]="searchQuery" (keyup.enter)="onSearch()">
+        <button class="btn-volt" (click)="onSearch()">SEARCH</button>
+      </div>
+    </div>
+    <div class="col-md-5">
+      <select class="form-select" [(ngModel)]="selectedCategory" (change)="onCategoryChange()">
+        <option [ngValue]="null">ALL CATEGORIES</option>
+        @for (category of categories; track category.id) {
+          <option [ngValue]="category.id">{{ category.name | uppercase }}</option>
+        }
+      </select>
+    </div>
+  </div>
+
+  <!-- Product Grid -->
+  <div class="row g-4">
+    @for (product of products; track product.id) {
+      <div class="col-sm-6 col-md-4">
+        <div class="dz-card dz-card-hover h-100 d-flex flex-column" style="overflow: hidden;">
+          <div class="position-relative">
+            @if (product.images && product.images.length > 0) {
+              <img [src]="product.images[0].imageUrl" class="card-img-top dz-product-img" [alt]="product.name">
+            } @else {
+              <div class="dz-no-image font-display">
+                NO IMAGE AVAILABLE
+              </div>
+            }
+            <div class="price-tag">${{ product.price }}</div>
+          </div>
+          <div class="card-body p-4 d-flex flex-column justify-content-between flex-grow-1">
+            <div>
+              <span class="category-lbl text-volt">{{ product.categoryName | uppercase }}</span>
+              <h5 class="product-title mt-1 mb-3">{{ product.name }}</h5>
+            </div>
+            <a [routerLink]="['/products', product.id]" class="btn-volt-outline w-100 text-center text-decoration-none">
+              VIEW DETAILS
+            </a>
+          </div>
+        </div>
+      </div>
+    } @empty {
+      <div class="col-12 text-center py-5">
+        <h4 class="text-muted">NO DROPS AVAILABLE AT THIS MOMENT</h4>
+      </div>
+    }
+  </div>
+
+  <!-- Pagination -->
+  @if (totalPages > 1) {
+    <div class="d-flex justify-content-center align-items-center gap-2 mt-5">
+      <button class="btn-volt-outline" (click)="prevPage()" [disabled]="currentPage === 0">PREV</button>
+      <span class="pagination-indicator font-display">{{ currentPage + 1 }} OF {{ totalPages }}</span>
+      <button class="btn-volt-outline" (click)="nextPage()" [disabled]="currentPage === totalPages - 1">NEXT</button>
+    </div>
+  }
+</div>
