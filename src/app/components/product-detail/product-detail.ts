@@ -63,24 +63,21 @@ export class ProductDetailComponent implements OnInit {
       return;
     }
 
-    const user = this.authService.getCurrentUser();
-    if (user) {
-      this.cartService.addItemToCart(user.id, {
-        productVariantId: this.selectedVariant.id,
-        quantity: this.quantity
-      }).subscribe({
-        next: () => {
-          this.successMessage = 'Added to cart!';
-          this.errorMessage = '';
-          this.cdr.markForCheck();
-        },
-        error: (err) => {
-          this.errorMessage = err.error?.message || 'Failed to add to cart';
-          this.successMessage = '';
-          this.cdr.markForCheck();
-        }
-      });
-    }
+    this.cartService.addItemToCart({
+      productVariantId: this.selectedVariant.id,
+      quantity: this.quantity
+    }).subscribe({
+      next: () => {
+        this.successMessage = 'Added to cart!';
+        this.errorMessage = '';
+        this.cdr.markForCheck();
+      },
+      error: (err) => {
+        this.errorMessage = err.error?.message || 'Failed to add to cart';
+        this.successMessage = '';
+        this.cdr.markForCheck();
+      }
+    });
   }
 
   addToWishlist(): void {
@@ -89,9 +86,8 @@ export class ProductDetailComponent implements OnInit {
       return;
     }
 
-    const user = this.authService.getCurrentUser();
-    if (user && this.product) {
-      this.wishlistService.addItemToWishlist(user.id, this.product.id).subscribe({
+    if (this.product) {
+      this.wishlistService.addItemToWishlist(this.product.id).subscribe({
         next: () => {
           this.successMessage = 'Added to wishlist!';
           this.errorMessage = '';

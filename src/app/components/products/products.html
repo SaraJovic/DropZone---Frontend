@@ -1,69 +1,88 @@
 <div class="container py-5">
+  <!-- Header -->
   <div class="d-flex justify-content-between align-items-baseline mb-5 flex-wrap gap-3">
-    <h2 class="section-title">PRODUCTS<span class="text-volt">/</span>ALL</h2>
-    <span class="text-muted text-uppercase font-display" style="font-size: 0.75rem; letter-spacing: 0.1em;">
-      {{ products.length }} DROPS FOUND
-    </span>
+    <div>
+      <span class="section-tag">CATALOG</span>
+      <h2 class="section-title">ALL <span class="text-volt">DROPS</span></h2>
+    </div>
+    <span class="drops-count">{{ products.length }} DROPS FOUND</span>
   </div>
 
-  <!-- Filters Panel -->
-  <div class="row g-3 mb-5">
-    <div class="col-md-7">
-      <div class="d-flex">
-        <input type="text" class="form-control me-2" placeholder="SEARCH PRODUCTS..."
+  <!-- Filters -->
+  <div class="filters-bar mb-5">
+    <div class="d-flex gap-3 flex-wrap">
+      <div class="search-wrapper flex-grow-1">
+        <i class="bi bi-search search-icon"></i>
+        <input type="text" class="form-control search-input" placeholder="SEARCH DROPS..."
                [(ngModel)]="searchQuery" (keyup.enter)="onSearch()">
-        <button class="btn-volt" (click)="onSearch()">SEARCH</button>
       </div>
-    </div>
-    <div class="col-md-5">
-      <select class="form-select" [(ngModel)]="selectedCategory" (change)="onCategoryChange()">
+      <select class="form-select category-select" [(ngModel)]="selectedCategory" (change)="onCategoryChange()">
         <option [ngValue]="null">ALL CATEGORIES</option>
         @for (category of categories; track category.id) {
           <option [ngValue]="category.id">{{ category.name | uppercase }}</option>
         }
       </select>
+      <button class="btn-volt px-4" (click)="onSearch()">
+        <i class="bi bi-search me-2"></i>SEARCH
+      </button>
     </div>
   </div>
 
   <!-- Product Grid -->
   <div class="row g-4">
     @for (product of products; track product.id) {
-      <div class="col-sm-6 col-md-4">
-        <div class="dz-card dz-card-hover h-100 d-flex flex-column" style="overflow: hidden;">
-          <div class="position-relative">
-            @if (product.images && product.images.length > 0) {
-              <img [src]="product.images[0].imageUrl" class="card-img-top dz-product-img" [alt]="product.name">
-            } @else {
-              <div class="dz-no-image font-display">
-                NO IMAGE AVAILABLE
+      <div class="col-sm-6 col-lg-4">
+        <a [routerLink]="['/products', product.id]" class="product-card-link">
+          <div class="product-card">
+            <!-- Image -->
+            <div class="product-img-wrapper">
+              @if (product.images && product.images.length > 0) {
+                <img [src]="product.images[0].imageUrl" [alt]="product.name" class="product-img">
+              } @else {
+                <div class="product-no-img">
+                  <span>NO IMAGE</span>
+                </div>
+              }
+              <div class="product-img-overlay">
+                <span class="quick-view-btn">QUICK VIEW</span>
               </div>
-            }
-            <div class="price-tag">${{ product.price }}</div>
-          </div>
-          <div class="card-body p-4 d-flex flex-column justify-content-between flex-grow-1">
-            <div>
-              <span class="category-lbl text-volt">{{ product.categoryName | uppercase }}</span>
-              <h5 class="product-title mt-1 mb-3">{{ product.name }}</h5>
+              <div class="product-price-tag">${{ product.price }}</div>
             </div>
-            <a [routerLink]="['/products', product.id]" class="btn-volt-outline w-100 text-center text-decoration-none">
-              VIEW DETAILS
-            </a>
+            <!-- Info -->
+            <div class="product-info">
+              <span class="product-category">{{ product.categoryName | uppercase }}</span>
+              <h5 class="product-name">{{ product.name }}</h5>
+              <div class="product-footer">
+                <span class="product-variants">
+                  {{ product.variants?.length || 0 }} VARIANTS
+                </span>
+                <span class="view-arrow"><i class="bi bi-arrow-right"></i></span>
+              </div>
+            </div>
           </div>
-        </div>
+        </a>
       </div>
     } @empty {
-      <div class="col-12 text-center py-5">
-        <h4 class="text-muted">NO DROPS AVAILABLE AT THIS MOMENT</h4>
+      <div class="col-12">
+        <div class="empty-state">
+          <i class="bi bi-bag-x empty-icon"></i>
+          <h4>NO DROPS AVAILABLE</h4>
+          <p>Check back soon for new releases.</p>
+        </div>
       </div>
     }
   </div>
 
   <!-- Pagination -->
   @if (totalPages > 1) {
-    <div class="d-flex justify-content-center align-items-center gap-2 mt-5">
-      <button class="btn-volt-outline" (click)="prevPage()" [disabled]="currentPage === 0">PREV</button>
-      <span class="pagination-indicator font-display">{{ currentPage + 1 }} OF {{ totalPages }}</span>
-      <button class="btn-volt-outline" (click)="nextPage()" [disabled]="currentPage === totalPages - 1">NEXT</button>
+    <div class="pagination-bar mt-5">
+      <button class="btn-volt-outline px-4" (click)="prevPage()" [disabled]="currentPage === 0">
+        <i class="bi bi-arrow-left me-2"></i>PREV
+      </button>
+      <span class="pagination-info">{{ currentPage + 1 }} / {{ totalPages }}</span>
+      <button class="btn-volt-outline px-4" (click)="nextPage()" [disabled]="currentPage === totalPages - 1">
+        NEXT<i class="bi bi-arrow-right ms-2"></i>
+      </button>
     </div>
   }
 </div>

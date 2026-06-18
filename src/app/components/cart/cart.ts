@@ -27,36 +27,26 @@ export class CartComponent implements OnInit {
   }
 
   loadCart(): void {
-    const user = this.authService.getCurrentUser();
-    if (user) {
-      this.cartService.getCart(user.id).subscribe({
-        next: (data) => {
-          this.cart = data;
-        },
-        error: () => {
-          this.cart = { id: 0, items: [], totalPrice: 0 };
-        }
-      });
-    }
-  }
-
-  removeItem(cartItemId: number): void {
-    this.cartService.removeItemFromCart(cartItemId).subscribe({
-      next: () => {
-        this.loadCart();
+    this.cartService.getCart().subscribe({
+      next: (data) => {
+        this.cart = data;
+      },
+      error: () => {
+        this.cart = { id: 0, items: [], totalPrice: 0 };
       }
     });
   }
 
+  removeItem(cartItemId: number): void {
+    this.cartService.removeItemFromCart(cartItemId).subscribe({
+      next: () => this.loadCart()
+    });
+  }
+
   clearCart(): void {
-    const user = this.authService.getCurrentUser();
-    if (user) {
-      this.cartService.clearCart(user.id).subscribe({
-        next: () => {
-          this.loadCart();
-        }
-      });
-    }
+    this.cartService.clearCart().subscribe({
+      next: () => this.loadCart()
+    });
   }
 
   goToCheckout(): void {

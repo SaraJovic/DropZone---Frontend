@@ -4,13 +4,48 @@
     <div class="badge-tag">LIMITED COLLECTION</div>
     <h1 class="hero-title">DROP<span class="text-volt">ZONE</span></h1>
     <p class="hero-subtitle">Premium streetwear apparel. Engineered for the streets.</p>
-    <div class="mt-4">
+    <div class="mt-4 d-flex gap-3 justify-content-center">
       <a routerLink="/products" class="btn-volt d-inline-block">Shop the Drop</a>
+      <a routerLink="/register" class="btn-volt-outline d-inline-block">Join the Club</a>
     </div>
   </div>
 </div>
 
-<div class="container py-5 mt-4">
+<!-- Featured Products -->
+@if (featuredProducts.length > 0) {
+  <div class="container py-5 mt-2">
+    <div class="section-header mb-4">
+      <span class="section-tag">LATEST DROPS</span>
+      <h2 class="section-title">Featured <span class="text-volt">Pieces</span></h2>
+    </div>
+    <div class="row g-4">
+      @for (product of featuredProducts; track product.id) {
+        <div class="col-md-4">
+          <a [routerLink]="['/products', product.id]" class="product-card-link">
+            <div class="product-card">
+              <div class="product-image-wrapper">
+                <img [src]="getPrimaryImage(product)" [alt]="product.name" class="product-image">
+                <div class="product-overlay">
+                  <span class="view-btn">VIEW DROP</span>
+                </div>
+              </div>
+              <div class="product-info">
+                <h6 class="product-name">{{ product.name }}</h6>
+                <span class="product-price">${{ product.price }}</span>
+              </div>
+            </div>
+          </a>
+        </div>
+      }
+    </div>
+    <div class="text-center mt-5">
+      <a routerLink="/products" class="btn-volt-outline d-inline-block">View All Drops</a>
+    </div>
+  </div>
+}
+
+<!-- Features -->
+<div class="container py-5">
   <div class="row g-4 text-center">
     <div class="col-md-4">
       <div class="dz-card p-5 h-100">

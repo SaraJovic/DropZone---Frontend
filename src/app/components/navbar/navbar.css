@@ -1,132 +1,17 @@
-.dz-navbar {
-  background: rgba(10, 10, 10, 0.75) !important;
-  backdrop-filter: blur(15px);
-  -webkit-backdrop-filter: blur(15px);
-  border-bottom: 1px solid var(--border-color);
-  padding: 1rem 0;
-  position: sticky;
-  top: 0;
-  z-index: 1030;
-}
-
-.dz-brand {
-  font-size: 1.5rem;
-  font-weight: 900;
-  letter-spacing: -0.05em;
-  color: #FFFFFF !important;
-  text-transform: uppercase;
-  transition: var(--transition);
-}
-.dz-brand:hover {
-  text-shadow: var(--shadow-volt);
-}
-
-.dz-link {
-  font-family: var(--font-display);
-  font-size: 0.85rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: var(--text-secondary) !important;
-  padding: 0.5rem 1rem !important;
-  transition: var(--transition);
-  position: relative;
-  cursor: pointer;
-}
-.dz-link:hover, .dz-link.active {
-  color: #FFFFFF !important;
-}
-.dz-link::after {
-  content: '';
+.cart-badge {
   position: absolute;
-  bottom: 0;
-  left: 1rem;
-  right: 1rem;
-  height: 2px;
+  top: 2px;
+  right: 2px;
   background-color: var(--accent-volt);
-  transform: scaleX(0);
-  transform-origin: right;
-  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-}
-.dz-link:hover::after, .dz-link.active::after {
-  transform: scaleX(1);
-  transform-origin: left;
-}
-
-.dz-link-volt {
-  font-family: var(--font-display);
-  font-size: 0.85rem;
+  color: #000000;
+  font-size: 0.65rem;
   font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: #000000 !important;
-  background-color: var(--accent-volt);
-  padding: 0.5rem 1.2rem !important;
-  border-radius: var(--radius);
-  transition: var(--transition);
-  margin-left: 0.5rem;
-}
-.dz-link-volt:hover {
-  background-color: #FFFFFF;
-  color: #000000 !important;
-  box-shadow: var(--shadow-volt);
-}
-
-.dz-logout-btn {
-  color: #FF4444 !important;
-}
-.dz-logout-btn:hover {
-  color: #FF7777 !important;
-}
-.dz-logout-btn::after {
-  background-color: #FF4444 !important;
-}
-
-/* Custom burger menu icon */
-.dz-toggler {
-  border: none !important;
-  padding: 0.5rem !important;
-  background: transparent !important;
+  font-family: var(--font-display);
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
   display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-.dz-toggler:focus {
-  box-shadow: none !important;
-}
-.dz-toggler-bar {
-  display: block;
-  width: 22px;
-  height: 2px;
-  background-color: #FFFFFF;
-  transition: var(--transition);
-}
-.dz-toggler[aria-expanded="true"] .dz-toggler-bar:nth-child(1) {
-  transform: translateY(8px) rotate(45deg);
-  background-color: var(--accent-volt);
-}
-.dz-toggler[aria-expanded="true"] .dz-toggler-bar:nth-child(2) {
-  opacity: 0;
-}
-.dz-toggler[aria-expanded="true"] .dz-toggler-bar:nth-child(3) {
-  transform: translateY(-8px) rotate(-45deg);
-  background-color: var(--accent-volt);
-}
-
-@media (max-width: 991.98px) {
-  .navbar-collapse {
-    background: var(--bg-secondary);
-    border: 1px solid var(--border-color);
-    padding: 1.5rem;
-    margin-top: 1rem;
-    border-radius: var(--radius);
-  }
-  .dz-link-volt {
-    margin-left: 0;
-    margin-top: 0.5rem;
-    display: inline-block;
-  }
-  .dz-link::after {
-    display: none;
-  }
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
 }

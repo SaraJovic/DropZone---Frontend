@@ -1,107 +1,106 @@
-.hero-section {
-  position: relative;
-  min-height: 80vh;
+.section-header {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: #050505;
-  background-image: 
-    radial-gradient(circle at 10% 20%, rgba(204, 255, 0, 0.05) 0%, transparent 40%),
-    radial-gradient(circle at 90% 80%, rgba(0, 212, 255, 0.05) 0%, transparent 40%),
-    linear-gradient(rgba(255, 255, 255, 0.01) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.01) 1px, transparent 1px);
-  background-size: 100% 100%, 100% 100%, 40px 40px, 40px 40px;
-  border-bottom: 1px solid var(--border-color);
-  padding: 4rem 1rem;
+  flex-direction: column;
+  gap: 0.5rem;
 }
 
-.hero-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: radial-gradient(circle, transparent 20%, #0A0A0A 90%);
-  z-index: 1;
-}
-
-.hero-content {
-  position: relative;
-  z-index: 2;
-  max-width: 800px;
-}
-
-.badge-tag {
-  display: inline-block;
+.section-tag {
   font-family: var(--font-display);
   font-size: 0.75rem;
   font-weight: 800;
   letter-spacing: 0.2em;
-  color: #000000;
-  background-color: #FFFFFF;
-  padding: 0.4rem 0.8rem;
-  border-radius: var(--radius);
-  margin-bottom: 1.5rem;
+  color: var(--accent-volt);
 }
 
-.hero-title {
-  font-size: 6.5rem;
-  font-weight: 950;
-  letter-spacing: -0.06em;
-  line-height: 0.85;
-  margin-bottom: 1.5rem;
-  text-shadow: 0 0 40px rgba(255, 255, 255, 0.05);
+.section-title {
+  font-size: 2.5rem;
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  margin: 0;
 }
 
-.hero-subtitle {
-  font-size: 1.25rem;
-  font-weight: 400;
-  color: var(--text-secondary);
-  max-width: 600px;
-  margin: 0 auto;
+.product-card-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
 }
 
-/* Feature cards custom styling */
-.icon-wrapper {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 60px;
-  height: 60px;
-  background: rgba(255, 255, 255, 0.02);
+.product-card {
+  background: var(--bg-glass);
   border: 1px solid var(--border-color);
   border-radius: var(--radius);
-  margin-bottom: 1.5rem;
-  font-size: 1.75rem;
+  overflow: hidden;
   transition: var(--transition);
 }
-.dz-card:hover .icon-wrapper {
+
+.product-card:hover {
   border-color: var(--accent-volt);
-  background: rgba(204, 255, 0, 0.05);
   box-shadow: var(--shadow-volt);
+  transform: translateY(-4px);
 }
 
-.feature-title {
-  font-size: 1.1rem;
-  font-weight: 700;
-  margin-bottom: 0.75rem;
-  letter-spacing: -0.01em;
+.product-image-wrapper {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 3/4;
 }
 
-.feature-desc {
+.product-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.product-card:hover .product-image {
+  transform: scale(1.05);
+}
+
+.product-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: var(--transition);
+}
+
+.product-card:hover .product-overlay {
+  opacity: 1;
+}
+
+.view-btn {
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  color: #000;
+  background: var(--accent-volt);
+  padding: 0.6rem 1.5rem;
+  border-radius: var(--radius);
+}
+
+.product-info {
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.product-name {
+  font-family: var(--font-display);
   font-size: 0.9rem;
-  color: var(--text-secondary);
-  line-height: 1.6;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  margin: 0;
 }
 
-@media (max-width: 767.98px) {
-  .hero-title {
-    font-size: 4rem;
-  }
-  .hero-subtitle {
-    font-size: 1.1rem;
-  }
-  .hero-section {
-    min-height: 65vh;
-  }
+.product-price {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: var(--accent-volt);
 }

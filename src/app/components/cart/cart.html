@@ -1,62 +1,97 @@
 <div class="container py-5">
-  <h2 class="section-title mb-5">SHOPPING<span class="text-volt">/</span>CART</h2>
+  <!-- Header -->
+  <div class="d-flex justify-content-between align-items-baseline mb-5 flex-wrap gap-3">
+    <div>
+      <span class="section-tag">YOUR BAG</span>
+      <h2 class="section-title">SHOPPING <span class="text-volt">CART</span></h2>
+    </div>
+    @if (cart && cart.items && cart.items.length > 0) {
+      <span class="drops-count">{{ cart.items.length }} ITEMS</span>
+    }
+  </div>
 
   @if (cart && cart.items && cart.items.length > 0) {
     <div class="row g-4">
-      <!-- Cart Items List -->
+      <!-- Cart Items -->
       <div class="col-lg-8">
-        @for (item of cart.items; track item.id) {
-          <div class="dz-card p-4 mb-3 d-flex flex-column flex-sm-row justify-content-between align-items-sm-center gap-3">
-            <div>
-              <h5 class="product-title mb-1">{{ item.productName }}</h5>
-              <p class="text-muted font-display text-uppercase mb-2" style="font-size: 0.75rem; letter-spacing: 0.05em;">
-                {{ item.size }} / {{ item.color }}
-              </p>
-              <div class="font-display" style="font-size: 0.85rem; color: var(--text-secondary);">
-                QTY: <span class="text-white">{{ item.quantity }}</span>
+        <div class="cart-items-list">
+          @for (item of cart.items; track item.id) {
+            <div class="cart-item">
+              <div class="cart-item-img-placeholder">
+                <i class="bi bi-bag"></i>
+              </div>
+              <div class="cart-item-info flex-grow-1">
+                <span class="cart-item-category">STREETWEAR</span>
+                <h5 class="cart-item-name">{{ item.productName }}</h5>
+                <div class="cart-item-meta">
+                  <span class="meta-tag">{{ item.size }}</span>
+                  <span class="meta-sep">/</span>
+                  <span class="meta-tag">{{ item.color }}</span>
+                </div>
+              </div>
+              <div class="cart-item-actions">
+                <div class="cart-item-price">${{ (item.price * item.quantity).toFixed(2) }}</div>
+                <div class="qty-info">QTY: {{ item.quantity }}</div>
+                <button class="remove-btn" (click)="removeItem(item.id)">
+                  <i class="bi bi-trash3"></i> REMOVE
+                </button>
               </div>
             </div>
-            <div class="text-sm-end d-flex flex-row flex-sm-column justify-content-between align-items-center align-items-sm-end gap-3">
-              <p class="fw-bold font-display text-volt mb-0" style="font-size: 1.15rem; text-shadow: var(--shadow-volt);">
-                ${{ (item.price * item.quantity).toFixed(2) }}
-              </p>
-              <button class="btn-danger-custom px-3 py-1.5" style="font-size: 0.75rem;" (click)="removeItem(item.id)">
-                REMOVE
-              </button>
-            </div>
-          </div>
-        }
-        <button class="btn-danger-custom px-4 py-2 mt-2" (click)="clearCart()">CLEAR CART</button>
+          }
+        </div>
+        <div class="mt-4">
+          <button class="btn-danger-custom px-4 py-2" (click)="clearCart()">
+            <i class="bi bi-trash3 me-2"></i>CLEAR CART
+          </button>
+        </div>
       </div>
 
-      <!-- Order Summary Card -->
+      <!-- Order Summary -->
       <div class="col-lg-4">
-        <div class="dz-card p-4">
-          <h5 class="font-display fw-bold mb-4 text-uppercase" style="letter-spacing: 0.05em; border-left: 2px solid var(--accent-volt); padding-left: 0.5rem;">
-            ORDER SUMMARY
-          </h5>
-          <div class="d-flex justify-content-between font-display mb-3">
-            <span class="text-secondary">SUBTOTAL:</span>
-            <span>${{ cart.totalPrice.toFixed(2) }}</span>
+        <div class="summary-card">
+          <div class="summary-header">
+            <span class="section-tag">BREAKDOWN</span>
+            <h5 class="summary-title">ORDER SUMMARY</h5>
           </div>
-          <div class="d-flex justify-content-between font-display mb-4">
-            <span class="text-secondary">SHIPPING:</span>
-            <span class="text-volt">FREE</span>
+          <div class="summary-body">
+            <div class="summary-row">
+              <span>SUBTOTAL</span>
+              <span>${{ cart.totalPrice.toFixed(2) }}</span>
+            </div>
+            <div class="summary-row">
+              <span>SHIPPING</span>
+              <span class="text-volt">FREE</span>
+            </div>
+            <div class="summary-row">
+              <span>TAX</span>
+              <span>INCLUDED</span>
+            </div>
           </div>
-          <hr style="border-color: var(--border-color);">
-          <div class="d-flex justify-content-between font-display fw-bold mb-4" style="font-size: 1.2rem;">
-            <span>TOTAL:</span>
-            <span class="text-volt" style="text-shadow: var(--shadow-volt);">${{ cart.totalPrice.toFixed(2) }}</span>
+          <div class="summary-total">
+            <span>TOTAL</span>
+            <span class="total-price">${{ cart.totalPrice.toFixed(2) }}</span>
           </div>
-          <button class="btn-volt w-100" (click)="goToCheckout()">PROCEED TO CHECKOUT</button>
+          <button class="btn-volt w-100 py-3 mt-4" (click)="goToCheckout()">
+            <i class="bi bi-lock me-2"></i>PROCEED TO CHECKOUT
+          </button>
+          <a routerLink="/products" class="continue-link">
+            <i class="bi bi-arrow-left me-1"></i> CONTINUE SHOPPING
+          </a>
         </div>
       </div>
     </div>
+
   } @else {
-    <div class="text-center py-5 dz-card p-5">
-      <i class="bi bi-cart-x text-muted" style="font-size: 3rem;"></i>
-      <h4 class="text-muted mt-3 mb-4">YOUR CART IS CURRENTLY EMPTY</h4>
-      <a routerLink="/products" class="btn-volt-outline text-decoration-none d-inline-block">CONTINUE SHOPPING</a>
+    <!-- Empty State -->
+    <div class="empty-cart">
+      <div class="empty-cart-icon">
+        <i class="bi bi-bag-x"></i>
+      </div>
+      <h3 class="empty-title">YOUR BAG IS EMPTY</h3>
+      <p class="empty-desc">Looks like you haven't added anything yet.</p>
+      <a routerLink="/products" class="btn-volt d-inline-block mt-2">
+        SHOP THE DROP
+      </a>
     </div>
   }
 </div>
