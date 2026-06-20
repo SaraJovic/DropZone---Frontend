@@ -1,27 +1,27 @@
-<div class="container py-5 mt-5">
+<div class="container py-5 mt-4">
   <div class="row justify-content-center">
     <div class="col-md-5">
-      <div class="dz-card p-5">
-        <h2 class="text-center mb-4 font-display fw-black" style="letter-spacing: -0.03em;">LOGIN</h2>
+      <div class="dz-card auth-card p-5">
+        <h2 class="text-center mb-4 auth-title">Login</h2>
 
         @if (errorMessage) {
-          <div class="alert alert-danger mb-4 text-center font-display text-uppercase" style="font-size: 0.8rem;">{{ errorMessage }}</div>
+          <div class="alert alert-danger mb-4 text-center">{{ errorMessage }}</div>
         }
 
         <form (ngSubmit)="onSubmit()">
           <div class="mb-4">
-            <label class="form-label font-display text-muted" style="font-size: 0.75rem; letter-spacing: 0.05em;">EMAIL ADDRESS</label>
-            <input type="email" class="form-control" [(ngModel)]="email" name="email" placeholder="ENTER YOUR EMAIL" required>
+            <label class="form-label auth-label">Email Address</label>
+            <input type="email" class="form-control" [(ngModel)]="email" name="email" placeholder="Enter your email" required>
           </div>
           <div class="mb-4">
-            <label class="form-label font-display text-muted" style="font-size: 0.75rem; letter-spacing: 0.05em;">PASSWORD</label>
-            <input type="password" class="form-control" [(ngModel)]="password" name="password" placeholder="ENTER YOUR PASSWORD" required>
+            <label class="form-label auth-label">Password</label>
+            <input type="password" class="form-control" [(ngModel)]="password" name="password" placeholder="Enter your password" required>
           </div>
-          <button type="submit" class="btn-volt w-100 mt-2">ACCESS ACCOUNT</button>
+          <button type="submit" class="btn-volt w-100 mt-2">Sign In</button>
         </form>
 
-        <p class="text-center mt-4 mb-0 font-display text-secondary" style="font-size: 0.85rem;">
-          DON'T HAVE AN ACCOUNT? <a routerLink="/register" class="text-volt text-decoration-none fw-bold">REGISTER</a>
+        <p class="text-center mt-4 mb-0 auth-footer-text">
+          Don't have an account? <a routerLink="/register">Register</a>
         </p>
       </div>
     </div>

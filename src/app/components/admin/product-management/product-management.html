@@ -1,98 +1,219 @@
 <div class="container py-5">
+  <!-- Header -->
   <div class="d-flex justify-content-between align-items-center mb-5 flex-wrap gap-3">
-    <h2 class="section-title">PRODUCT<span class="text-volt">/</span>MANAGEMENT</h2>
-    <a routerLink="/admin" class="btn-volt-outline py-2" style="font-size: 0.8rem; text-decoration: none;">BACK TO DASHBOARD</a>
+    <div>
+      <span class="section-tag">ADMIN</span>
+      <h2 class="section-title">PRODUCT <span class="text-volt">MANAGEMENT</span></h2>
+    </div>
+    <a routerLink="/admin" class="btn-volt-outline py-2 px-4 text-decoration-none">
+      <i class="bi bi-arrow-left me-2"></i>DASHBOARD
+    </a>
   </div>
 
   @if (successMessage) {
-    <div class="alert alert-success mb-4 text-uppercase font-display">{{ successMessage }}</div>
+    <div class="status-banner success mb-4">
+      <i class="bi bi-check-circle me-2"></i>{{ successMessage | uppercase }}
+    </div>
   }
   @if (errorMessage) {
-    <div class="alert alert-danger mb-4 text-uppercase font-display">{{ errorMessage }}</div>
+    <div class="status-banner error mb-4">
+      <i class="bi bi-exclamation-triangle me-2"></i>{{ errorMessage | uppercase }}
+    </div>
   }
 
-  <!-- Add Product Card -->
-  <div class="dz-card p-4 mb-5">
-    <h5 class="font-display fw-bold mb-4 text-uppercase" style="letter-spacing: 0.05em; border-left: 2px solid var(--accent-volt); padding-left: 0.5rem;">
-      ADD NEW DROP
-    </h5>
-    <div class="row g-3">
-      <div class="col-md-3">
-        <input type="text" class="form-control" placeholder="PRODUCT NAME"
-               [(ngModel)]="newProduct.name">
-      </div>
-      <div class="col-md-3">
-        <input type="text" class="form-control" placeholder="DESCRIPTION"
-               [(ngModel)]="newProduct.description">
-      </div>
-      <div class="col-md-2">
-        <input type="number" class="form-control" placeholder="PRICE"
-               [(ngModel)]="newProduct.price">
-      </div>
-      <div class="col-md-2">
-        <select class="form-select font-display text-uppercase" [(ngModel)]="newProduct.categoryId">
-          <option [ngValue]="null">SELECT CATEGORY</option>
-          @for (category of categories; track category.id) {
-            <option [ngValue]="category.id">{{ category.name | uppercase }}</option>
-          }
-        </select>
-      </div>
-      <div class="col-md-2">
-        <button class="btn-volt w-100 py-2" style="font-size: 0.8rem;" (click)="createProduct()">ADD PRODUCT</button>
+  <!-- Add Product -->
+  <div class="admin-card mb-5">
+    <div class="admin-card-header">
+      <span class="section-tag">NEW</span>
+      <h5 class="admin-card-title">ADD NEW DROP</h5>
+    </div>
+    <div class="admin-card-body">
+      <div class="row g-3">
+        <div class="col-md-3">
+          <label class="field-label">PRODUCT NAME *</label>
+          <input type="text" class="form-control" placeholder="e.g. DropZone Hoodie"
+                 [(ngModel)]="newProduct.name">
+        </div>
+        <div class="col-md-3">
+          <label class="field-label">DESCRIPTION</label>
+          <input type="text" class="form-control" placeholder="Short description"
+                 [(ngModel)]="newProduct.description">
+        </div>
+        <div class="col-md-2">
+          <label class="field-label">PRICE ($) *</label>
+          <input type="number" class="form-control" placeholder="0.00"
+                 [(ngModel)]="newProduct.price">
+        </div>
+        <div class="col-md-2">
+          <label class="field-label">CATEGORY *</label>
+          <select class="form-select" [(ngModel)]="newProduct.categoryId">
+            <option [ngValue]="null">SELECT</option>
+            @for (category of categories; track category.id) {
+              <option [ngValue]="category.id">{{ category.name | uppercase }}</option>
+            }
+          </select>
+        </div>
+        <div class="col-md-2 d-flex align-items-end">
+          <button class="btn-volt w-100 py-2" (click)="createProduct()">
+            <i class="bi bi-plus-lg me-1"></i>ADD PRODUCT
+          </button>
+        </div>
       </div>
     </div>
   </div>
 
-  <!-- Product Inventory Table -->
-  <h5 class="font-display fw-bold mb-4 text-uppercase" style="letter-spacing: 0.05em; border-left: 2px solid var(--accent-volt); padding-left: 0.5rem;">
-    INVENTORY CATALOG
-  </h5>
-  <div class="table-responsive dz-card p-2">
-    <table class="table table-hover mb-0">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>NAME</th>
-          <th>CATEGORY</th>
-          <th>PRICE</th>
-          <th class="text-end">ACTIONS</th>
-        </tr>
-      </thead>
-      <tbody>
-        @for (product of products; track product.id) {
-          <tr>
-            @if (editingProduct?.id === product.id) {
-              <td class="font-display fw-bold">#{{ product.id }}</td>
-              <td><input type="text" class="form-control form-control-sm" [(ngModel)]="editingProduct!.name"></td>
-              <td>
-                <select class="form-select form-select-sm font-display text-uppercase" [(ngModel)]="editingProduct!.categoryId">
-                  @for (category of categories; track category.id) {
-                    <option [ngValue]="category.id">{{ category.name | uppercase }}</option>
+  <!-- Product List -->
+  <div class="mb-4">
+    <span class="section-tag">CATALOG</span>
+    <h4 class="table-section-title">INVENTORY</h4>
+  </div>
+
+  <div class="products-list">
+    @for (product of products; track product.id) {
+      <div class="product-row-card">
+        <!-- Product Main Row -->
+        <div class="product-main-row">
+          @if (editingProduct?.id === product.id) {
+            <!-- Edit Mode -->
+            <div class="edit-row">
+              <input type="text" class="form-control form-control-sm" [(ngModel)]="editingProduct!.name" placeholder="Name">
+              <input type="text" class="form-control form-control-sm" [(ngModel)]="editingProduct!.description" placeholder="Description">
+              <input type="number" class="form-control form-control-sm" [(ngModel)]="editingProduct!.price" placeholder="Price">
+              <select class="form-select form-select-sm" [(ngModel)]="editingProduct!.categoryId">
+                @for (category of categories; track category.id) {
+                  <option [ngValue]="category.id">{{ category.name | uppercase }}</option>
+                }
+              </select>
+              <div class="d-flex gap-2">
+                <button class="btn-volt py-1 px-3" style="font-size: 0.75rem;" (click)="updateProduct()">SAVE</button>
+                <button class="btn-volt-outline py-1 px-3" style="font-size: 0.75rem;" (click)="cancelEdit()">CANCEL</button>
+              </div>
+            </div>
+          } @else {
+            <!-- View Mode -->
+            <div class="product-info-row">
+              <span class="product-row-id">#{{ product.id }}</span>
+              <span class="product-row-name">{{ product.name }}</span>
+              <span class="product-row-cat">{{ product.categoryName | uppercase }}</span>
+              <span class="product-row-price">${{ product.price }}</span>
+              <div class="product-row-variants">
+                <span class="variants-count">{{ product.variants?.length || 0 }} variants</span>
+                <span class="images-count">{{ product.images?.length || 0 }} images</span>
+              </div>
+            </div>
+            <div class="product-row-actions">
+              <button class="expand-btn" (click)="toggleExpand(product.id)"
+                [class.active]="expandedProductId === product.id">
+                <i class="bi" [class.bi-chevron-down]="expandedProductId !== product.id"
+                   [class.bi-chevron-up]="expandedProductId === product.id"></i>
+                MANAGE
+              </button>
+              <button class="btn-volt-outline py-1 px-3" style="font-size: 0.75rem;" (click)="startEdit(product)">EDIT</button>
+              <button class="btn-danger-custom py-1 px-3" style="font-size: 0.75rem;" (click)="deleteProduct(product.id)">DELETE</button>
+            </div>
+          }
+        </div>
+
+        <!-- Expanded Panel -->
+        @if (expandedProductId === product.id) {
+          <div class="expanded-panel">
+            <div class="row g-4">
+              <!-- Add Variant -->
+              <div class="col-md-6">
+                <div class="sub-card">
+                  <h6 class="sub-card-title">
+                    <i class="bi bi-tags me-2"></i>ADD VARIANT
+                  </h6>
+                  <div class="d-flex flex-column gap-2">
+                    <select class="form-select form-select-sm" [(ngModel)]="newVariant.size">
+                      <option value="">SELECT SIZE</option>
+                      @for (size of getSizeOptions(); track size) {
+                        <option [value]="size">{{ size }}</option>
+                      }
+                    </select>
+                    <input type="text" class="form-control form-control-sm"
+                           placeholder="COLOR (e.g. BLACK)"
+                           [(ngModel)]="newVariant.color">
+                    <input type="number" class="form-control form-control-sm"
+                           placeholder="STOCK QUANTITY"
+                           [(ngModel)]="newVariant.stockQuantity" min="0">
+                    <button class="btn-volt py-2" (click)="addVariant()">
+                      <i class="bi bi-plus-lg me-1"></i>ADD VARIANT
+                    </button>
+                  </div>
+
+                  <!-- Existing Variants -->
+                  @if (product.variants && product.variants.length > 0) {
+                    <div class="existing-list mt-3">
+                      <span class="existing-label">EXISTING VARIANTS</span>
+                      @for (variant of product.variants; track variant.id) {
+                        <div class="existing-item">
+                          <span>{{ variant.size }} / {{ variant.color | uppercase }}</span>
+                          <span class="stock-badge">{{ variant.stockQuantity }} in stock</span>
+                        </div>
+                      }
+                    </div>
                   }
-                </select>
-              </td>
-              <td><input type="number" class="form-control form-control-sm font-display" [(ngModel)]="editingProduct!.price"></td>
-              <td>
-                <div class="d-flex justify-content-end gap-1">
-                  <button class="btn-volt py-1 px-3" style="font-size: 0.75rem;" (click)="updateProduct()">SAVE</button>
-                  <button class="btn-volt-outline py-1 px-3" style="font-size: 0.75rem;" (click)="cancelEdit()">CANCEL</button>
                 </div>
-              </td>
-            } @else {
-              <td class="font-display fw-bold text-white">#{{ product.id }}</td>
-              <td class="text-uppercase">{{ product.name }}</td>
-              <td class="text-secondary text-uppercase">{{ product.categoryName }}</td>
-              <td class="font-display text-volt">${{ product.price }}</td>
-              <td>
-                <div class="d-flex justify-content-end gap-2">
-                  <button class="btn-volt-outline py-1 px-3" style="font-size: 0.75rem;" (click)="startEdit(product)">EDIT</button>
-                  <button class="btn-danger-custom py-1 px-3" style="font-size: 0.75rem;" (click)="deleteProduct(product.id)">DELETE</button>
+              </div>
+
+              <!-- Add Image -->
+              <div class="col-md-6">
+                <div class="sub-card">
+                  <h6 class="sub-card-title">
+                    <i class="bi bi-image me-2"></i>ADD IMAGE
+                  </h6>
+                  <div class="d-flex flex-column gap-2">
+                    <!-- File upload input -->
+                    <label class="upload-zone" [class.uploading]="isUploading">
+                      <input type="file" accept="image/*" hidden (change)="onFileSelected($event)">
+                      @if (isUploading) {
+                        <span><i class="bi bi-arrow-repeat spin me-2"></i>UPLOADING...</span>
+                      } @else if (newImage.imageUrl) {
+                        <span><i class="bi bi-check-circle me-2"></i>IMAGE READY</span>
+                      } @else {
+                        <span><i class="bi bi-cloud-upload me-2"></i>CLICK TO UPLOAD IMAGE</span>
+                      }
+                    </label>
+
+                    <div class="d-flex align-items-center gap-2">
+                      <input type="checkbox" class="form-check-input" id="isPrimary"
+                             [(ngModel)]="newImage.isPrimary">
+                      <label class="field-label mb-0" for="isPrimary">SET AS PRIMARY IMAGE</label>
+                    </div>
+
+                    @if (newImage.imageUrl) {
+                      <div class="image-preview">
+                        <img [src]="newImage.imageUrl" alt="Preview" class="preview-img">
+                      </div>
+                    }
+
+                    <button class="btn-volt py-2" (click)="addImage()" [disabled]="!newImage.imageUrl || isUploading">
+                      <i class="bi bi-upload me-1"></i>SAVE IMAGE TO PRODUCT
+                    </button>
+                  </div>
+
+                  <!-- Existing Images -->
+                  @if (product.images && product.images.length > 0) {
+                    <div class="existing-list mt-3">
+                      <span class="existing-label">EXISTING IMAGES</span>
+                      @for (image of product.images; track image.id) {
+                        <div class="existing-item">
+                          <img [src]="image.imageUrl" class="thumb-preview" [alt]="product.name">
+                          <span class="image-url-text">{{ image.imageUrl }}</span>
+                          @if (image.isPrimary) {
+                            <span class="primary-badge">PRIMARY</span>
+                          }
+                        </div>
+                      }
+                    </div>
+                  }
                 </div>
-              </td>
-            }
-          </tr>
+              </div>
+            </div>
+          </div>
         }
-      </tbody>
-    </table>
+      </div>
+    }
   </div>
 </div>

@@ -1,4 +1,122 @@
-/* Dashboard specific styling rules */
-.dz-card {
-  transition: var(--transition);
+.section-tag {
+  font-family: var(--font-heading-family);
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: var(--accent-red);
+  display: block;
+  margin-bottom: 0.6rem;
+  text-transform: uppercase;
+}
+
+.section-title {
+  font-size: clamp(2.8rem, 5vw, 4rem);
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  margin: 0;
+  text-transform: uppercase;
+  color: var(--text-heading);
+  line-height: 1.1;
+}
+
+.table-section-title {
+  font-family: var(--font-heading-family);
+  font-size: 1.5rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin: 0;
+  padding-left: 1rem;
+  border-left: 3px solid var(--text-heading);
+  color: var(--text-heading);
+}
+
+.stat-card {
+  background: var(--bg-base);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius);
+  padding: 2rem;
+  transition: var(--transition-smooth);
+}
+
+.stat-card:hover {
+  box-shadow: var(--shadow-sm);
+}
+
+.stat-card-accent {
+  border-color: var(--text-heading) !important;
+  background: var(--bg-surface);
+}
+
+.stat-icon {
+  font-size: 2rem;
+  color: var(--text-body);
+  margin-bottom: 1rem;
+  display: block;
+}
+
+.stat-label {
+  font-family: var(--font-heading-family);
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--text-body);
+  display: block;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+}
+
+.stat-value {
+  font-family: var(--font-heading-family);
+  font-size: 3rem;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  margin: 0;
+  color: var(--text-heading);
+  line-height: 1;
+}
+
+.stat-card-accent .stat-value,
+.stat-card-accent .stat-label,
+.stat-card-accent .stat-icon {
+  color: var(--text-heading);
+}
+
+.admin-table-wrapper {
+  background: var(--bg-base);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.order-id {
+  font-family: var(--font-heading-family);
+  font-weight: 900;
+  color: var(--text-heading) !important;
+}
+
+.customer-name {
+  text-transform: uppercase;
+  font-family: var(--font-heading-family);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-heading);
+}
+
+.order-total {
+  font-family: var(--font-heading-family);
+  font-weight: 700;
+  color: var(--text-heading) !important;
+}
+
+.order-date {
+  font-family: var(--font-body-family);
+  font-size: 1.2rem;
+  color: var(--text-body) !important;
+}
+
+.status-select {
+  max-width: 160px;
+  font-family: var(--font-body-family) !important;
+  font-size: 1.2rem !important;
 }

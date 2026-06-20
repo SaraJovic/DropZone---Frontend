@@ -1,73 +1,95 @@
 <div class="container py-5">
-  <h2 class="section-title mb-5">MY<span class="text-volt">/</span>ORDERS</h2>
+  <!-- Header -->
+  <div class="d-flex justify-content-between align-items-baseline mb-5 flex-wrap gap-3">
+    <div>
+      <span class="section-tag">HISTORY</span>
+      <h2 class="section-title">MY <span class="text-volt">ORDERS</span></h2>
+    </div>
+    @if (orders.length > 0) {
+      <span class="drops-count">{{ orders.length }} ORDERS</span>
+    }
+  </div>
 
   @if (successMessage) {
-    <div class="alert alert-success mb-4 text-uppercase font-display">{{ successMessage }}</div>
+    <div class="status-banner success mb-4">
+      <i class="bi bi-check-circle me-2"></i>{{ successMessage | uppercase }}
+    </div>
   }
   @if (errorMessage) {
-    <div class="alert alert-danger mb-4 text-uppercase font-display">{{ errorMessage }}</div>
+    <div class="status-banner error mb-4">
+      <i class="bi bi-exclamation-triangle me-2"></i>{{ errorMessage | uppercase }}
+    </div>
   }
 
   @if (orders.length > 0) {
-    @for (order of orders; track order.id) {
-      <div class="dz-card mb-4">
-        <div class="card-header d-flex justify-content-between align-items-center p-4" style="border-bottom: 1px solid var(--border-color); background: rgba(255,255,255,0.01);">
-          <span class="font-display fw-bold" style="letter-spacing: 0.05em;">ORDER #{{ order.id }}</span>
-          <span [class]="getStatusClass(order.status)">{{ order.status }}</span>
-        </div>
-        <div class="card-body p-4">
-          <div class="row g-2 mb-4 font-display" style="font-size: 0.85rem;">
-            <div class="col-md-6">
-              <span class="text-secondary">DATE:</span> <span class="text-white">{{ order.createdAt | date:'mediumDate' | uppercase }}</span>
+    <div class="orders-list">
+      @for (order of orders; track order.id) {
+        <div class="order-card">
+          <!-- Order Header -->
+          <div class="order-card-header">
+            <div class="order-id-block">
+              <span class="order-label">ORDER</span>
+              <span class="order-id">#{{ order.id }}</span>
             </div>
-            <div class="col-md-6 text-md-end">
-              <span class="text-secondary">SHIPPING TO:</span> <span class="text-white text-uppercase">{{ order.shippingAddress }}</span>
+            <div class="order-meta">
+              <span class="order-date">
+                <i class="bi bi-calendar3 me-1"></i>
+                {{ order.createdAt | date:'mediumDate' | uppercase }}
+              </span>
+              <span [class]="getStatusClass(order.status)">{{ order.status }}</span>
             </div>
           </div>
 
-          <div class="table-responsive">
-            <table class="table table-sm mb-4">
-              <thead>
-                <tr>
-                  <th>PRODUCT</th>
-                  <th>SIZE</th>
-                  <th>COLOR</th>
-                  <th>QTY</th>
-                  <th class="text-end">PRICE</th>
-                </tr>
-              </thead>
-              <tbody>
-                @for (item of order.items; track item.id) {
-                  <tr class="font-display">
-                    <td class="text-white fw-bold">{{ item.productName }}</td>
-                    <td>{{ item.size | uppercase }}</td>
-                    <td>{{ item.color | uppercase }}</td>
-                    <td>{{ item.quantity }}</td>
-                    <td class="text-end text-volt">${{ item.priceAtPurchase }}</td>
-                  </tr>
-                }
-              </tbody>
-            </table>
+          <!-- Order Items -->
+          <div class="order-card-body">
+            <div class="order-items-table">
+              <div class="table-header">
+                <span>PRODUCT</span>
+                <span>SIZE</span>
+                <span>COLOR</span>
+                <span>QTY</span>
+                <span class="text-end">PRICE</span>
+              </div>
+              @for (item of order.items; track item.id) {
+                <div class="table-row">
+                  <span class="item-name">{{ item.productName }}</span>
+                  <span class="item-meta">{{ item.size | uppercase }}</span>
+                  <span class="item-meta">{{ item.color | uppercase }}</span>
+                  <span class="item-meta">× {{ item.quantity }}</span>
+                  <span class="item-price text-end">${{ item.priceAtPurchase }}</span>
+                </div>
+              }
+            </div>
+
+            <!-- Shipping -->
+            <div class="shipping-info">
+              <i class="bi bi-geo-alt me-1"></i>
+              <span>{{ order.shippingAddress | uppercase }}</span>
+            </div>
           </div>
 
-          <div class="d-flex justify-content-between align-items-center pt-3" style="border-top: 1px solid var(--border-color);">
-            <div class="font-display fw-bold" style="font-size: 1.15rem;">
-              <span class="text-secondary" style="font-size: 0.9rem;">TOTAL PRICE:</span>
-              <span class="text-volt ms-2" style="text-shadow: var(--shadow-volt);">${{ order.totalPrice }}</span>
+          <!-- Order Footer -->
+          <div class="order-card-footer">
+            <div class="order-total">
+              <span class="total-label">ORDER TOTAL</span>
+              <span class="total-amount">${{ order.totalPrice }}</span>
             </div>
             @if (order.status === 'PENDING') {
-              <button class="btn-danger-custom px-3 py-1.5" style="font-size: 0.8rem;" (click)="cancelOrder(order.id)">
-                CANCEL ORDER
+              <button class="cancel-btn" (click)="cancelOrder(order.id)">
+                <i class="bi bi-x-circle me-1"></i>CANCEL ORDER
               </button>
             }
           </div>
         </div>
-      </div>
-    }
+      }
+    </div>
   } @else {
-    <div class="text-center py-5 dz-card p-5">
-      <i class="bi bi-box-seam text-muted" style="font-size: 3rem;"></i>
-      <h4 class="text-muted mt-3">NO ORDERS PLACED YET</h4>
+    <div class="empty-orders">
+      <div class="empty-icon">
+        <i class="bi bi-box-seam"></i>
+      </div>
+      <h3 class="empty-title">NO ORDERS YET</h3>
+      <p class="empty-desc">Your order history will appear here.</p>
     </div>
   }
 </div>

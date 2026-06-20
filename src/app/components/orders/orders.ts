@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { OrderService } from '../../services/order';
-import { AuthService } from '../../services/auth';
 import { Order } from '../../models';
 
 @Component({
@@ -16,34 +15,33 @@ export class OrdersComponent implements OnInit {
   successMessage = '';
   errorMessage = '';
 
-  constructor(
-    private orderService: OrderService,
-    private authService: AuthService
-  ) {}
+  constructor(private orderService: OrderService) {}
 
   ngOnInit(): void {
     this.loadOrders();
   }
 
   loadOrders(): void {
-    const user = this.authService.getCurrentUser();
-    if (user) {
-      this.orderService.getOrdersByUser(user.id).subscribe({
-        next: (data) => {
-          this.orders = data;
-        }
-      });
-    }
+    this.orderService.getOrdersByUser().subscribe({
+      next: (data) => {
+        this.orders = data;
+      },
+      error: () => {
+        this.errorMessage = 'Failed to load orders';
+      }
+    });
   }
 
   cancelOrder(orderId: number): void {
     this.orderService.cancelOrder(orderId).subscribe({
       next: () => {
         this.successMessage = 'Order cancelled successfully!';
+        this.errorMessage = '';
         this.loadOrders();
       },
       error: (err) => {
         this.errorMessage = err.error?.message || 'Failed to cancel order';
+        this.successMessage = '';
       }
     });
   }

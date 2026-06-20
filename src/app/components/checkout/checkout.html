@@ -1,61 +1,99 @@
 <div class="container py-5">
-  <h2 class="section-title mb-5">SECURE<span class="text-volt">/</span>CHECKOUT</h2>
+  <!-- Header -->
+  <div class="mb-5">
+    <span class="section-tag">ALMOST THERE</span>
+    <h2 class="section-title">SECURE <span class="text-volt">CHECKOUT</span></h2>
+  </div>
 
   @if (successMessage) {
-    <div class="alert alert-success mb-4 text-uppercase font-display">{{ successMessage }}</div>
+    <div class="status-banner success mb-4">
+      <i class="bi bi-check-circle me-2"></i>{{ successMessage | uppercase }}
+    </div>
   }
   @if (errorMessage) {
-    <div class="alert alert-danger mb-4 text-uppercase font-display">{{ errorMessage }}</div>
+    <div class="status-banner error mb-4">
+      <i class="bi bi-exclamation-triangle me-2"></i>{{ errorMessage | uppercase }}
+    </div>
   }
 
   <div class="row g-4">
-    <!-- Left form side -->
+    <!-- Left: Shipping Form -->
     <div class="col-lg-7">
-      <div class="dz-card p-4 mb-4">
-        <h5 class="font-display fw-bold mb-4 text-uppercase" style="letter-spacing: 0.05em; border-left: 2px solid var(--accent-volt); padding-left: 0.5rem;">
-          SHIPPING ADDRESS
-        </h5>
-        <div class="mb-4">
-          <label class="form-label font-display text-muted" style="font-size: 0.75rem;">FULL SHIPPING DETAILS</label>
-          <textarea class="form-control font-display" rows="4"
-            [(ngModel)]="shippingAddress"
-            placeholder="STREET NAME, APARTMENT, ZIP CODE, CITY, COUNTRY...">
-          </textarea>
+      <div class="checkout-card">
+        <div class="checkout-card-header">
+          <span class="section-tag">STEP 01</span>
+          <h5 class="checkout-card-title">SHIPPING DETAILS</h5>
         </div>
-        <button class="btn-volt w-100" (click)="placeOrder()" [disabled]="isLoading">
-          @if (isLoading) {
-            PLACING ORDER...
-          } @else {
-            PLACE ORDER
-          }
-        </button>
+        <div class="checkout-card-body">
+          <label class="field-label">FULL SHIPPING ADDRESS</label>
+          <textarea class="form-control checkout-textarea" rows="4"
+            [(ngModel)]="shippingAddress"
+            placeholder="Street name, apartment, ZIP code, city, country...">
+          </textarea>
+          <div class="field-hint">
+            <i class="bi bi-shield-check me-1"></i>
+            Your address is encrypted and secure
+          </div>
+        </div>
+        <div class="checkout-card-footer">
+          <button class="btn-volt w-100 py-3" (click)="placeOrder()" [disabled]="isLoading || !shippingAddress.trim()">
+            @if (isLoading) {
+              <span class="spinner-border spinner-border-sm me-2"></span>PLACING ORDER...
+            } @else {
+              <i class="bi bi-lock me-2"></i>PLACE ORDER
+            }
+          </button>
+          <a routerLink="/cart" class="back-link">
+            <i class="bi bi-arrow-left me-1"></i>BACK TO CART
+          </a>
+        </div>
       </div>
     </div>
 
-    <!-- Right summary side -->
+    <!-- Right: Order Summary -->
     <div class="col-lg-5">
-      <div class="dz-card p-4">
-        <h5 class="font-display fw-bold mb-4 text-uppercase" style="letter-spacing: 0.05em; border-left: 2px solid var(--accent-volt); padding-left: 0.5rem;">
-          ORDER PREVIEW
-        </h5>
-        @if (cart && cart.items) {
-          <div class="mb-4">
-            @for (item of cart.items; track item.id) {
-              <div class="d-flex justify-content-between mb-3 font-display align-items-center" style="font-size: 0.9rem;">
-                <div>
-                  <span class="text-white fw-bold">{{ item.productName }}</span>
-                  <span class="text-muted ms-1" style="font-size: 0.75rem;">({{ item.size }}) x{{ item.quantity }}</span>
+      <div class="checkout-card">
+        <div class="checkout-card-header">
+          <span class="section-tag">STEP 02</span>
+          <h5 class="checkout-card-title">ORDER PREVIEW</h5>
+        </div>
+        <div class="checkout-card-body">
+          @if (cart && cart.items && cart.items.length > 0) {
+            <div class="order-items">
+              @for (item of cart.items; track item.id) {
+                <div class="order-item">
+                  <div class="order-item-icon">
+                    <i class="bi bi-bag"></i>
+                  </div>
+                  <div class="order-item-info flex-grow-1">
+                    <span class="order-item-name">{{ item.productName }}</span>
+                    <span class="order-item-meta">{{ item.size }} / {{ item.color }} × {{ item.quantity }}</span>
+                  </div>
+                  <span class="order-item-price">${{ (item.price * item.quantity).toFixed(2) }}</span>
                 </div>
-                <span class="text-volt">${{ (item.price * item.quantity).toFixed(2) }}</span>
+              }
+            </div>
+            <div class="order-totals">
+              <div class="total-row">
+                <span>SUBTOTAL</span>
+                <span>${{ cart.totalPrice.toFixed(2) }}</span>
               </div>
-            }
-          </div>
-          <hr style="border-color: var(--border-color);">
-          <div class="d-flex justify-content-between font-display fw-bold mb-0" style="font-size: 1.15rem;">
-            <span>TOTAL:</span>
-            <span class="text-volt" style="text-shadow: var(--shadow-volt);">${{ cart.totalPrice.toFixed(2) }}</span>
-          </div>
-        }
+              <div class="total-row">
+                <span>SHIPPING</span>
+                <span class="text-volt">FREE</span>
+              </div>
+              <div class="total-row grand-total">
+                <span>TOTAL</span>
+                <span class="grand-total-price">${{ cart.totalPrice.toFixed(2) }}</span>
+              </div>
+            </div>
+          } @else {
+            <div class="empty-order">
+              <i class="bi bi-bag-x"></i>
+              <span>No items in cart</span>
+            </div>
+          }
+        </div>
       </div>
     </div>
   </div>

@@ -1,67 +1,80 @@
-<nav class="navbar navbar-expand-lg dz-navbar">
-  <div class="container">
-    <a class="navbar-brand dz-brand" routerLink="/">
-      DROP<span class="text-volt">ZONE</span>
-    </a>
-
-    <button class="navbar-toggler dz-toggler" type="button" data-bs-toggle="collapse"
-      data-bs-target="#navbarNav" aria-controls="navbarNav"
-      aria-expanded="false" aria-label="Toggle navigation">
-      <span class="dz-toggler-bar"></span>
-      <span class="dz-toggler-bar"></span>
-      <span class="dz-toggler-bar"></span>
-    </button>
-
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav me-auto dz-nav-links">
-        <li class="nav-item">
-          <a class="nav-link dz-link" routerLink="/products" routerLinkActive="active">
-            Products
-          </a>
-        </li>
-      </ul>
-
-      <ul class="navbar-nav dz-nav-auth align-items-center">
-        @if (isLoggedIn()) {
-          <li class="nav-item">
-            <a class="nav-link dz-link" routerLink="/wishlist" routerLinkActive="active">
-              <i class="bi bi-heart me-1"></i> Wishlist
-            </a>
-          </li>
-          <li class="nav-item position-relative">
-            <a class="nav-link dz-link" routerLink="/cart" routerLinkActive="active">
-              <i class="bi bi-cart3 me-1"></i> Cart
-              @if (cartItemCount > 0) {
-                <span class="cart-badge">{{ cartItemCount }}</span>
-              }
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link dz-link" routerLink="/orders" routerLinkActive="active">
-              <i class="bi bi-box me-1"></i> Orders
-            </a>
-          </li>
-          @if (isAdmin()) {
-            <li class="nav-item">
-              <a class="nav-link dz-link text-volt" routerLink="/admin" routerLinkActive="active">
-                <i class="bi bi-shield-lock me-1"></i> Admin
-              </a>
-            </li>
-          }
-          <li class="nav-item">
-            <a class="nav-link dz-link dz-logout-btn" (click)="logout()">
-              <i class="bi bi-box-arrow-right me-1"></i> Logout ({{ getCurrentUser()?.firstName }})
-            </a>
-          </li>
-        } @else {
-          <li class="nav-item">
-            <a class="nav-link dz-link" routerLink="/login" routerLinkActive="active">Login</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link dz-link-volt" routerLink="/register">Register</a>
-          </li>
-        }
-      </ul>
+<div class="dz-nav-wrapper">
+  <div class="dz-utility-bar">
+    <div class="container">
+      <span class="dz-utility-text">FREE DELIVERY ON ORDERS OVER $75 &nbsp;·&nbsp; EASY 30-DAY RETURNS &nbsp;·&nbsp; NEW DROPS EVERY FRIDAY</span>
     </div>
   </div>
-</nav>
+
+  <nav class="navbar navbar-expand-lg dz-navbar">
+    <div class="container">
+      <a class="navbar-brand dz-brand" routerLink="/">
+        DROP<span class="dz-brand-accent">ZONE</span>
+      </a>
+
+      <button class="navbar-toggler dz-toggler" type="button" data-bs-toggle="collapse"
+        data-bs-target="#navbarNav" aria-controls="navbarNav"
+        aria-expanded="false" aria-label="Toggle navigation">
+        <span class="dz-toggler-bar"></span>
+        <span class="dz-toggler-bar"></span>
+        <span class="dz-toggler-bar"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav me-auto dz-nav-links">
+          <li class="nav-item">
+            <a class="nav-link dz-link" routerLink="/products" routerLinkActive="active">
+              Shop
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link dz-link" routerLink="/products" routerLinkActive="active">
+              Collections
+            </a>
+          </li>
+        </ul>
+
+        <ul class="navbar-nav dz-nav-auth align-items-center">
+          @if (isLoggedIn()) {
+            <li class="nav-item">
+              <a class="nav-link dz-link" routerLink="/wishlist" routerLinkActive="active">
+                <i class="bi bi-heart me-1"></i> Wishlist
+              </a>
+            </li>
+            <li class="nav-item position-relative">
+              <a class="nav-link dz-link" routerLink="/cart" routerLinkActive="active">
+                <i class="bi bi-bag me-1"></i> Bag
+                @if (cartItemCount > 0) {
+                  <span class="cart-badge">{{ cartItemCount }}</span>
+                }
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link dz-link" routerLink="/orders" routerLinkActive="active">
+                Orders
+              </a>
+            </li>
+            @if (isAdmin()) {
+              <li class="nav-item">
+                <a class="nav-link dz-link dz-link-admin" routerLink="/admin" routerLinkActive="active">
+                  Admin
+                </a>
+              </li>
+            }
+            <li class="nav-item">
+              <a class="nav-link dz-link dz-logout-btn" (click)="logout()">
+                Logout ({{ getCurrentUser()?.firstName }})
+              </a>
+            </li>
+          } @else {
+            <li class="nav-item">
+              <a class="nav-link dz-link" routerLink="/login" routerLinkActive="active">Login</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link dz-link-cta" routerLink="/register">Register</a>
+            </li>
+          }
+        </ul>
+      </div>
+    </div>
+  </nav>
+</div>

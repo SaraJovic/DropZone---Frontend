@@ -1,77 +1,93 @@
-<div class="hero-section text-center">
+<div class="hero-section">
   <div class="hero-overlay"></div>
   <div class="container hero-content">
-    <div class="badge-tag">LIMITED COLLECTION</div>
-    <h1 class="hero-title">DROP<span class="text-volt">ZONE</span></h1>
-    <p class="hero-subtitle">Premium streetwear apparel. Engineered for the streets.</p>
-    <div class="mt-4 d-flex gap-3 justify-content-center">
-      <a routerLink="/products" class="btn-volt d-inline-block">Shop the Drop</a>
-      <a routerLink="/register" class="btn-volt-outline d-inline-block">Join the Club</a>
+    <div class="badge-tag">New Season · SS26</div>
+    <h1 class="hero-title">Streets Before<br>Stadiums</h1>
+    <p class="hero-subtitle">No rules. Just us. Premium streetwear built for everyday culture.</p>
+    <div class="hero-actions">
+      <a routerLink="/products" class="btn-volt">Shop the Drop</a>
+      <a routerLink="/register" class="btn-volt-outline">Join the Club</a>
     </div>
   </div>
 </div>
 
 <!-- Featured Products -->
 @if (featuredProducts.length > 0) {
-  <div class="container py-5 mt-2">
-    <div class="section-header mb-4">
-      <span class="section-tag">LATEST DROPS</span>
-      <h2 class="section-title">Featured <span class="text-volt">Pieces</span></h2>
-    </div>
-    <div class="row g-4">
-      @for (product of featuredProducts; track product.id) {
-        <div class="col-md-4">
-          <a [routerLink]="['/products', product.id]" class="product-card-link">
-            <div class="product-card">
-              <div class="product-image-wrapper">
-                <img [src]="getPrimaryImage(product)" [alt]="product.name" class="product-image">
-                <div class="product-overlay">
-                  <span class="view-btn">VIEW DROP</span>
+  <div class="home-section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Latest Drops</span>
+        <h2 class="section-title">Featured Pieces</h2>
+      </div>
+      <div class="row g-4 g-lg-5">
+        @for (product of featuredProducts; track product.id) {
+          <div class="col-sm-6 col-lg-4">
+            <a [routerLink]="['/products', product.id]" class="product-card-link">
+              <div class="product-card">
+                <div class="product-image-wrapper">
+                  <img [src]="getPrimaryImage(product)" [alt]="product.name" class="product-image">
+                </div>
+                <div class="product-info">
+                  <h6 class="product-name">{{ product.name }}</h6>
+                  <div class="product-swatches">
+                    <span class="swatch swatch-dark"></span>
+                    <span class="swatch swatch-light"></span>
+                    <span class="swatch swatch-accent"></span>
+                  </div>
+                  <span class="product-price">${{ product.price }}</span>
                 </div>
               </div>
-              <div class="product-info">
-                <h6 class="product-name">{{ product.name }}</h6>
-                <span class="product-price">${{ product.price }}</span>
-              </div>
-            </div>
-          </a>
-        </div>
-      }
-    </div>
-    <div class="text-center mt-5">
-      <a routerLink="/products" class="btn-volt-outline d-inline-block">View All Drops</a>
+            </a>
+          </div>
+        }
+      </div>
+      <div class="text-center mt-5 pt-3">
+        <a routerLink="/products" class="btn-volt-outline">View All Products</a>
+      </div>
     </div>
   </div>
 }
 
+<!-- Collection Promo Banner -->
+<div class="promo-banner">
+  <div class="promo-banner-overlay"></div>
+  <div class="container promo-banner-content">
+    <span class="promo-tag">Capsule Collection</span>
+    <h2 class="promo-title">Urban Essentials<br>Restocked</h2>
+    <a routerLink="/products" class="promo-link">Explore Collection <i class="bi bi-arrow-right"></i></a>
+  </div>
+</div>
+
 <!-- Features -->
-<div class="container py-5">
-  <div class="row g-4 text-center">
-    <div class="col-md-4">
-      <div class="dz-card p-5 h-100">
-        <div class="icon-wrapper">
-          <i class="bi bi-truck text-volt"></i>
+<div class="light-section py-5">
+  <div class="container">
+    <div class="row g-4 text-center">
+      <div class="col-md-4">
+        <div class="dz-card p-5 h-100">
+          <div class="icon-wrapper">
+            <i class="bi bi-truck"></i>
+          </div>
+          <h5 class="feature-title">Free Shipping</h5>
+          <p class="feature-desc">Complimentary delivery on orders over $75. Tracked worldwide.</p>
         </div>
-        <h5 class="feature-title">Fast Shipping</h5>
-        <p class="feature-desc">Worldwide express delivery. Tracked and secured.</p>
       </div>
-    </div>
-    <div class="col-md-4">
-      <div class="dz-card p-5 h-100">
-        <div class="icon-wrapper">
-          <i class="bi bi-shield-check text-volt"></i>
+      <div class="col-md-4">
+        <div class="dz-card p-5 h-100">
+          <div class="icon-wrapper">
+            <i class="bi bi-shield-check"></i>
+          </div>
+          <h5 class="feature-title">Secure Checkout</h5>
+          <p class="feature-desc">Fully encrypted transactions with trusted payment partners.</p>
         </div>
-        <h5 class="feature-title">Secure Checkouts</h5>
-        <p class="feature-desc">Fully encrypted transactions with modern payments.</p>
       </div>
-    </div>
-    <div class="col-md-4">
-      <div class="dz-card p-5 h-100">
-        <div class="icon-wrapper">
-          <i class="bi bi-arrow-left-right text-volt"></i>
+      <div class="col-md-4">
+        <div class="dz-card p-5 h-100">
+          <div class="icon-wrapper">
+            <i class="bi bi-arrow-left-right"></i>
+          </div>
+          <h5 class="feature-title">Easy Returns</h5>
+          <p class="feature-desc">Hassle-free exchanges and returns within 30 days.</p>
         </div>
-        <h5 class="feature-title">Hassle Free</h5>
-        <p class="feature-desc">Easy exchange and returns within 30 days of purchase.</p>
       </div>
     </div>
   </div>

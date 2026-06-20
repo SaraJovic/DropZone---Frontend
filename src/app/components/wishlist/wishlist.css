@@ -1,4 +1,217 @@
-/* Wishlist specific styling rules */
-.dz-card {
-  transition: var(--transition);
+.section-tag {
+  font-family: var(--font-heading-family);
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: var(--accent-red);
+  display: block;
+  margin-bottom: 0.6rem;
+  text-transform: uppercase;
+}
+
+.section-title {
+  font-size: clamp(2.8rem, 5vw, 4rem);
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  margin: 0;
+  text-transform: uppercase;
+  color: var(--text-heading);
+  line-height: 1.1;
+}
+
+.drops-count {
+  font-family: var(--font-heading-family);
+  font-size: 1.2rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--text-body);
+  text-transform: uppercase;
+}
+
+.status-banner {
+  font-family: var(--font-body-family);
+  font-size: 1.4rem;
+  font-weight: 500;
+  padding: 1.2rem 1.6rem;
+  border-radius: var(--radius);
+  display: flex;
+  align-items: center;
+}
+
+.status-banner.success {
+  background: rgba(45, 106, 79, 0.08);
+  border: 1px solid rgba(45, 106, 79, 0.2);
+  color: var(--color-success);
+}
+
+.wishlist-card {
+  background: var(--bg-base);
+  overflow: hidden;
+  transition: var(--transition-smooth);
+}
+
+.wishlist-card:hover {
+  transform: translateY(-2px);
+}
+
+.wishlist-img-wrapper {
+  position: relative;
+  aspect-ratio: 3/4;
+  overflow: hidden;
+  background: var(--bg-alt);
+}
+
+.wishlist-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.wishlist-card:hover .wishlist-img {
+  transform: scale(1.05);
+}
+
+.wishlist-no-img {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  color: var(--text-body);
+  font-family: var(--font-heading-family);
+  font-size: 1.1rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.wishlist-no-img i {
+  font-size: 3rem;
+  color: var(--border-hover);
+}
+
+.wishlist-price-tag {
+  position: absolute;
+  bottom: 1rem;
+  left: 1rem;
+  background: var(--bg-base);
+  color: var(--text-heading);
+  font-family: var(--font-body-family);
+  font-size: 1.4rem;
+  font-weight: 500;
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius);
+}
+
+.wishlist-remove-overlay {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  width: 40px;
+  height: 40px;
+  background: var(--bg-base);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-body);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: var(--transition-fast);
+  font-size: 1.2rem;
+  opacity: 0;
+}
+
+.wishlist-card:hover .wishlist-remove-overlay {
+  opacity: 1;
+}
+
+.wishlist-remove-overlay:hover {
+  border-color: var(--color-critical);
+  color: var(--color-critical);
+}
+
+.wishlist-info {
+  padding: 1.4rem 0.2rem;
+}
+
+.wishlist-category {
+  font-family: var(--font-heading-family);
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: var(--text-body);
+  display: block;
+  margin-bottom: 0.4rem;
+  text-transform: uppercase;
+}
+
+.wishlist-name {
+  font-family: var(--font-heading-family);
+  font-size: 1.3rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin: 0 0 1rem;
+  color: var(--text-heading);
+}
+
+.wishlist-actions {
+  display: flex;
+  gap: 0.8rem;
+  align-items: center;
+}
+
+.remove-btn {
+  background: transparent;
+  border: 1px solid var(--border-subtle);
+  color: var(--text-body);
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: var(--transition-fast);
+  flex-shrink: 0;
+  font-size: 1.3rem;
+}
+
+.remove-btn:hover {
+  border-color: var(--color-critical);
+  color: var(--color-critical);
+}
+
+.empty-wishlist {
+  text-align: center;
+  padding: 8rem 2rem;
+  border: 1px solid var(--border-subtle);
+  background: var(--bg-surface);
+}
+
+.empty-icon {
+  font-size: 4rem;
+  color: var(--border-hover);
+  margin-bottom: 2rem;
+  display: block;
+}
+
+.empty-title {
+  font-family: var(--font-heading-family);
+  font-size: 2.2rem;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+  color: var(--text-heading);
+}
+
+.empty-desc {
+  color: var(--text-body);
+  font-size: 1.5rem;
+  margin-bottom: 0;
 }

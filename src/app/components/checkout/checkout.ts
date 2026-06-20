@@ -9,7 +9,7 @@ import { Cart } from '../../models';
 
 @Component({
   selector: 'app-checkout',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, RouterLink],
   templateUrl: './checkout.html',
   styleUrl: './checkout.css'
 })
@@ -29,17 +29,14 @@ export class CheckoutComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    const user = this.authService.getCurrentUser();
-    if (user) {
-      this.cartService.getCart(user.id).subscribe({
-        next: (data) => {
-          this.cart = data;
-        },
-        error: () => {
-          this.cart = { id: 0, items: [], totalPrice: 0 };
-        }
-      });
-    }
+    this.cartService.getCart().subscribe({
+      next: (data) => {
+        this.cart = data;
+      },
+      error: () => {
+        this.cart = { id: 0, items: [], totalPrice: 0 };
+      }
+    });
   }
 
   placeOrder(): void {
@@ -49,24 +46,21 @@ export class CheckoutComponent implements OnInit {
     }
 
     this.isLoading = true;
-    const user = this.authService.getCurrentUser();
-    if (user) {
-      this.orderService.createOrder(user.id, {
-        shippingAddress: this.shippingAddress
-      }).subscribe({
-        next: () => {
-          this.successMessage = 'Order placed successfully!';
-          this.errorMessage = '';
-          this.isLoading = false;
-          setTimeout(() => {
-            this.router.navigate(['/orders']);
-          }, 2000);
-        },
-        error: (err) => {
-          this.errorMessage = err.error?.message || 'Failed to place order';
-          this.isLoading = false;
-        }
-      });
-    }
+    this.orderService.createOrder({
+      shippingAddress: this.shippingAddress
+    }).subscribe({
+      next: () => {
+        this.successMessage = 'Order placed successfully!';
+        this.errorMessage = '';
+        this.isLoading = false;
+        setTimeout(() => {
+          this.router.navigate(['/orders']);
+        }, 2000);
+      },
+      error: (err) => {
+        this.errorMessage = err.error?.message || 'Failed to place order';
+        this.isLoading = false;
+      }
+    });
   }
 }

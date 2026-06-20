@@ -1,33 +1,51 @@
 <div class="container py-5">
-  <h2 class="section-title mb-5">MY<span class="text-volt">/</span>WISHLIST</h2>
+  <!-- Header -->
+  <div class="d-flex justify-content-between align-items-baseline mb-5 flex-wrap gap-3">
+    <div>
+      <span class="section-tag">SAVED ITEMS</span>
+      <h2 class="section-title">MY <span class="text-volt">WISHLIST</span></h2>
+    </div>
+    @if (wishlist && wishlist.items.length > 0) {
+      <span class="drops-count">{{ wishlist.items.length }} ITEMS</span>
+    }
+  </div>
 
   @if (successMessage) {
-    <div class="alert alert-success mb-4 text-uppercase font-display">{{ successMessage }}</div>
+    <div class="status-banner success mb-4">
+      <i class="bi bi-check-circle me-2"></i>{{ successMessage | uppercase }}
+    </div>
   }
 
   @if (wishlist && wishlist.items && wishlist.items.length > 0) {
     <div class="row g-4">
       @for (item of wishlist.items; track item.id) {
-        <div class="col-sm-6 col-md-4">
-          <div class="dz-card dz-card-hover h-100 d-flex flex-column" style="overflow: hidden;">
-            <div class="position-relative">
+        <div class="col-sm-6 col-lg-4">
+          <div class="wishlist-card">
+            <!-- Image -->
+            <div class="wishlist-img-wrapper">
               @if (item.primaryImageUrl) {
-                <img [src]="item.primaryImageUrl" class="card-img-top dz-product-img" [alt]="item.productName">
+                <img [src]="item.primaryImageUrl" [alt]="item.productName" class="wishlist-img">
               } @else {
-                <div class="dz-no-image font-display">
-                  NO IMAGE
+                <div class="wishlist-no-img">
+                  <i class="bi bi-image"></i>
+                  <span>NO IMAGE</span>
                 </div>
               }
-              <div class="price-tag">${{ item.price }}</div>
+              <div class="wishlist-price-tag">${{ item.price }}</div>
+              <button class="wishlist-remove-overlay" (click)="removeItem(item.id)">
+                <i class="bi bi-heart-fill"></i>
+              </button>
             </div>
-            <div class="card-body p-4 d-flex flex-column justify-content-between flex-grow-1">
-              <h5 class="product-title mt-1 mb-4">{{ item.productName }}</h5>
-              <div class="d-flex gap-2">
-                <a [routerLink]="['/products', item.productId]" class="btn-volt flex-grow-1 text-center text-decoration-none py-2" style="font-size: 0.8rem;">
-                  VIEW DETAILS
+            <!-- Info -->
+            <div class="wishlist-info">
+              <span class="wishlist-category">STREETWEAR</span>
+              <h5 class="wishlist-name">{{ item.productName }}</h5>
+              <div class="wishlist-actions">
+                <a [routerLink]="['/products', item.productId]" class="btn-volt flex-grow-1 text-center text-decoration-none py-2">
+                  VIEW DROP
                 </a>
-                <button class="btn-danger-custom px-3 py-2" style="font-size: 0.8rem;" (click)="removeItem(item.id)">
-                  REMOVE
+                <button class="remove-btn" (click)="removeItem(item.id)">
+                  <i class="bi bi-trash3"></i>
                 </button>
               </div>
             </div>
@@ -36,10 +54,15 @@
       }
     </div>
   } @else {
-    <div class="text-center py-5 dz-card p-5">
-      <i class="bi bi-heartbreak text-muted" style="font-size: 3rem;"></i>
-      <h4 class="text-muted mt-3 mb-4">YOUR WISHLIST IS CURRENTLY EMPTY</h4>
-      <a routerLink="/products" class="btn-volt-outline text-decoration-none d-inline-block">BROWSE PRODUCTS</a>
+    <div class="empty-wishlist">
+      <div class="empty-icon">
+        <i class="bi bi-heartbreak"></i>
+      </div>
+      <h3 class="empty-title">WISHLIST IS EMPTY</h3>
+      <p class="empty-desc">Save items you love and find them here later.</p>
+      <a routerLink="/products" class="btn-volt d-inline-block mt-2">
+        BROWSE DROPS
+      </a>
     </div>
   }
 </div>

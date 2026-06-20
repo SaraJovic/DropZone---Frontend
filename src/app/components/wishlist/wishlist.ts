@@ -2,7 +2,6 @@ import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@
 import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { WishlistService } from '../../services/wishlist';
-import { AuthService } from '../../services/auth';
 import { Wishlist } from '../../models';
 
 @Component({
@@ -19,7 +18,6 @@ export class WishlistComponent implements OnInit {
 
   constructor(
     private wishlistService: WishlistService,
-    private authService: AuthService,
     private cdr: ChangeDetectorRef
   ) {}
 
@@ -28,19 +26,16 @@ export class WishlistComponent implements OnInit {
   }
 
   loadWishlist(): void {
-    const user = this.authService.getCurrentUser();
-    if (user) {
-      this.wishlistService.getWishlist(user.id).subscribe({
-        next: (data) => {
-          this.wishlist = data;
-          this.cdr.markForCheck();
-        },
-        error: () => {
-          this.wishlist = { id: 0, items: [] };
-          this.cdr.markForCheck();
-        }
-      });
-    }
+    this.wishlistService.getWishlist().subscribe({
+      next: (data) => {
+        this.wishlist = data;
+        this.cdr.markForCheck();
+      },
+      error: () => {
+        this.wishlist = { id: 0, items: [] };
+        this.cdr.markForCheck();
+      }
+    });
   }
 
   removeItem(wishlistItemId: number): void {

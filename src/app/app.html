@@ -1,2 +1,49 @@
-<app-navbar></app-navbar>
-<router-outlet></router-outlet>
+<div class="dz-app-shell">
+  <app-navbar></app-navbar>
+  <router-outlet></router-outlet>
+  <footer class="dz-footer">
+    <div class="container dz-footer-inner">
+      <div class="dz-footer-grid">
+        <div>
+          <div class="dz-footer-brand">DropZone</div>
+          <p class="dz-footer-tagline">Premium streetwear for those who live outside the lines. Curated drops, quality fabrics, no compromises.</p>
+          <div class="dz-footer-social">
+            <a href="#" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+            <a href="#" aria-label="TikTok"><i class="bi bi-tiktok"></i></a>
+            <a href="#" aria-label="Twitter"><i class="bi bi-twitter-x"></i></a>
+          </div>
+        </div>
+        <div>
+          <div class="dz-footer-heading">Shop</div>
+          <ul class="dz-footer-links">
+            <li><a href="/products">All Products</a></li>
+            <li><a href="/products">New Arrivals</a></li>
+            <li><a href="/wishlist">Wishlist</a></li>
+            <li><a href="/cart">Shopping Bag</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="dz-footer-heading">Stores</div>
+          <ul class="dz-footer-links">
+            <li><span>London — Soho</span></li>
+            <li><span>New York — LES</span></li>
+            <li><span>Tokyo — Shibuya</span></li>
+            <li><a href="/orders">Track Order</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="dz-footer-heading">Newsletter</div>
+          <p class="dz-footer-tagline" style="max-width: none;">Be first to know about new drops and exclusive releases.</p>
+          <div class="dz-newsletter-form">
+            <input type="email" class="dz-newsletter-input" placeholder="Your email">
+            <button type="button" class="dz-newsletter-btn">Join</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container dz-footer-bottom">
+      <span>&copy; 2026 DropZone. All rights reserved.</span>
+      <span>Free delivery on orders over $75</span>
+    </div>
+  </footer>
+</div>

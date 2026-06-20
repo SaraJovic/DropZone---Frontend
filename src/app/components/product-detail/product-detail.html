@@ -1,14 +1,12 @@
 <div class="container py-5">
   @if (product) {
-    <!-- Breadcrumb -->
     <div class="breadcrumb-bar mb-5">
-      <span class="breadcrumb-item-dz">PRODUCTS</span>
+      <a href="/products" class="breadcrumb-item-dz breadcrumb-link">Products</a>
       <span class="breadcrumb-sep">/</span>
-      <span class="breadcrumb-item-dz text-volt">{{ product.name | uppercase }}</span>
+      <span class="breadcrumb-item-dz breadcrumb-current">{{ product.name }}</span>
     </div>
 
     <div class="row g-5">
-      <!-- Image -->
       <div class="col-md-6">
         <div class="detail-img-wrapper">
           @if (product.images && product.images.length > 0) {
@@ -16,31 +14,28 @@
           } @else {
             <div class="detail-no-img">
               <i class="bi bi-image"></i>
-              <span>NO IMAGE AVAILABLE</span>
+              <span>No Image Available</span>
             </div>
           }
-          <div class="detail-price-tag">${{ product.price }}</div>
         </div>
       </div>
 
-      <!-- Info -->
       <div class="col-md-6 d-flex flex-column gap-4">
         <div>
           <span class="product-category">{{ product.categoryName | uppercase }}</span>
           <h1 class="product-title">{{ product.name }}</h1>
+          <span class="detail-price">${{ product.price }}</span>
         </div>
 
-        <!-- Description -->
         @if (product.description) {
           <div class="info-block">
-            <h6 class="block-label">DESCRIPTION</h6>
+            <h6 class="block-label">Description</h6>
             <p class="description-text">{{ product.description }}</p>
           </div>
         }
 
-        <!-- Variants -->
         <div class="info-block">
-          <h6 class="block-label">SELECT SIZE & COLOR</h6>
+          <h6 class="block-label">Select Size & Color</h6>
           <div class="d-flex flex-wrap gap-2">
             @for (variant of product.variants; track variant.id) {
               <button class="variant-btn"
@@ -49,7 +44,7 @@
                 (click)="selectVariant(variant)">
                 {{ variant.size | uppercase }} / {{ variant.color | uppercase }}
                 @if (variant.stockQuantity === 0) {
-                  <span class="sold-out-tag">SOLD OUT</span>
+                  <span class="sold-out-tag">Sold Out</span>
                 }
               </button>
             }
@@ -57,14 +52,13 @@
           @if (selectedVariant) {
             <p class="stock-info mt-2">
               <i class="bi bi-box-seam me-1"></i>
-              {{ selectedVariant.stockQuantity }} IN STOCK
+              {{ selectedVariant.stockQuantity }} in stock
             </p>
           }
         </div>
 
-        <!-- Quantity -->
         <div class="info-block">
-          <h6 class="block-label">QUANTITY</h6>
+          <h6 class="block-label">Quantity</h6>
           <div class="quantity-control">
             <button class="qty-btn" (click)="quantity > 1 ? quantity = quantity - 1 : null">
               <i class="bi bi-dash"></i>
@@ -76,18 +70,16 @@
           </div>
         </div>
 
-        <!-- Messages -->
         @if (successMessage) {
-          <div class="alert alert-success py-2 px-3">{{ successMessage | uppercase }}</div>
+          <div class="alert alert-success py-2 px-3">{{ successMessage }}</div>
         }
         @if (errorMessage) {
-          <div class="alert alert-danger py-2 px-3">{{ errorMessage | uppercase }}</div>
+          <div class="alert alert-danger py-2 px-3">{{ errorMessage }}</div>
         }
 
-        <!-- Actions -->
         <div class="d-flex gap-3">
           <button class="btn-volt flex-grow-1 py-3" (click)="addToCart()">
-            <i class="bi bi-cart3 me-2"></i>ADD TO CART
+            <i class="bi bi-bag me-2"></i>Add to Bag
           </button>
           <button class="wishlist-btn" (click)="addToWishlist()">
             <i class="bi bi-heart"></i>
@@ -98,7 +90,7 @@
   } @else {
     <div class="loading-state">
       <div class="spinner-border text-volt" role="status"></div>
-      <p class="mt-3">LOADING DROP...</p>
+      <p class="mt-3">Loading product...</p>
     </div>
   }
 </div>

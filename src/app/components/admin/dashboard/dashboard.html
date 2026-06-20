@@ -1,59 +1,68 @@
 <div class="container py-5">
-  <h2 class="section-title mb-5">ADMIN<span class="text-volt">/</span>DASHBOARD</h2>
+  <!-- Header -->
+  <div class="mb-5">
+    <span class="section-tag">CONTROL CENTER</span>
+    <h2 class="section-title">ADMIN <span class="text-volt">DASHBOARD</span></h2>
+  </div>
 
-  <!-- Stats Grid -->
+  <!-- Stats -->
   <div class="row g-4 mb-5">
     <div class="col-md-4">
-      <div class="dz-card p-4 h-100">
-        <span class="font-display text-muted text-uppercase" style="font-size: 0.8rem; letter-spacing: 0.05em;">TOTAL ORDERS</span>
-        <h2 class="display-6 font-display fw-black mt-2 mb-0">{{ orders.length }}</h2>
+      <div class="stat-card">
+        <div class="stat-icon"><i class="bi bi-box-seam"></i></div>
+        <span class="stat-label">TOTAL ORDERS</span>
+        <h2 class="stat-value">{{ orders.length }}</h2>
       </div>
     </div>
     <div class="col-md-4">
-      <div class="dz-card p-4 h-100" style="border-color: var(--accent-volt) !important; box-shadow: var(--shadow-volt);">
-        <span class="font-display text-volt text-uppercase" style="font-size: 0.8rem; letter-spacing: 0.05em;">TOTAL REVENUE</span>
-        <h2 class="display-6 font-display fw-black mt-2 mb-0 text-volt" style="text-shadow: var(--shadow-volt);">${{ totalRevenue.toFixed(2) }}</h2>
+      <div class="stat-card stat-card-accent">
+        <div class="stat-icon text-volt"><i class="bi bi-currency-dollar"></i></div>
+        <span class="stat-label text-volt">TOTAL REVENUE</span>
+        <h2 class="stat-value text-volt">${{ totalRevenue.toFixed(2) }}</h2>
       </div>
     </div>
     <div class="col-md-4">
-      <div class="dz-card p-4 h-100">
-        <span class="font-display text-muted text-uppercase" style="font-size: 0.8rem; letter-spacing: 0.05em;">PRODUCT INVENTORY</span>
-        <div class="mt-3">
-          <a routerLink="/admin/products" class="btn-volt-outline w-100 text-center text-decoration-none d-block py-2" style="font-size: 0.8rem;">
-            MANAGE PRODUCTS
-          </a>
-        </div>
+      <div class="stat-card">
+        <div class="stat-icon"><i class="bi bi-grid"></i></div>
+        <span class="stat-label">INVENTORY</span>
+        <a routerLink="/admin/products" class="btn-volt w-100 text-center text-decoration-none d-block py-2 mt-3">
+          MANAGE PRODUCTS
+        </a>
       </div>
     </div>
   </div>
 
-  <h4 class="font-display fw-bold mb-4 text-uppercase" style="letter-spacing: 0.05em; border-left: 2px solid var(--accent-volt); padding-left: 0.5rem;">
-    ALL ORDERS RECORD
-  </h4>
-  <div class="table-responsive dz-card p-2">
+  <!-- Orders Table -->
+  <div class="mb-4">
+    <span class="section-tag">RECORDS</span>
+    <h4 class="table-section-title">ALL ORDERS</h4>
+  </div>
+
+  <div class="admin-table-wrapper">
     <table class="table table-hover mb-0">
       <thead>
         <tr>
           <th>ORDER ID</th>
           <th>CUSTOMER</th>
-          <th>TOTAL PRICE</th>
+          <th>TOTAL</th>
           <th>STATUS</th>
           <th>DATE</th>
-          <th class="text-end">ACTIONS</th>
+          <th class="text-end">CHANGE STATUS</th>
         </tr>
       </thead>
       <tbody>
         @for (order of orders; track order.id) {
           <tr>
-            <td class="font-display fw-bold text-white">#{{ order.id }}</td>
-            <td class="text-uppercase">{{ order.user?.firstName }} {{ order.user?.lastName }}</td>
-            <td class="font-display text-volt">${{ order.totalPrice }}</td>
+            <td class="order-id">#{{ order.id }}</td>
+            <td class="customer-name">{{ order.user?.firstName }} {{ order.user?.lastName }}</td>
+            <td class="order-total">${{ order.totalPrice }}</td>
             <td><span [class]="getStatusClass(order.status)">{{ order.status }}</span></td>
-            <td class="font-display">{{ order.createdAt | date:'mediumDate' | uppercase }}</td>
+            <td class="order-date">{{ order.createdAt | date:'mediumDate' | uppercase }}</td>
             <td>
               <div class="d-flex justify-content-end">
-                <select class="form-select form-select-sm font-display text-uppercase" style="max-width: 160px; font-size: 0.75rem;" (change)="handleStatusChange(order.id, $event)">
-                  <option value="">CHANGE STATUS</option>
+                <select class="form-select form-select-sm status-select"
+                  (change)="handleStatusChange(order.id, $event)">
+                  <option value="">UPDATE STATUS</option>
                   <option value="PENDING">PENDING</option>
                   <option value="PROCESSING">PROCESSING</option>
                   <option value="SHIPPED">SHIPPED</option>

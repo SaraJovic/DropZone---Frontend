@@ -1,4 +1,8 @@
-/* Login specific styling rules */
-.dz-card {
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5) !important;
+.auth-card {
+  box-shadow: var(--shadow-md) !important;
+}
+
+.auth-page {
+  background: var(--bg-surface);
+  min-height: calc(100vh - 200px);
 }
