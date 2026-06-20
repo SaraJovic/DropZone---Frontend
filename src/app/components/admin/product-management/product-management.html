@@ -53,7 +53,16 @@
             }
           </select>
         </div>
-        <div class="col-md-2 d-flex align-items-end">
+        <div class="col-md-2">
+          <label class="field-label">GENDER *</label>
+          <select class="form-select" [(ngModel)]="newProduct.gender">
+            <option [ngValue]="null">SELECT</option>
+            @for (g of genderOptions; track g.value) {
+              <option [ngValue]="g.value">{{ g.label | uppercase }}</option>
+            }
+          </select>
+        </div>
+        <div class="col-md-1 d-flex align-items-end">
           <button class="btn-volt w-100 py-2" (click)="createProduct()">
             <i class="bi bi-plus-lg me-1"></i>ADD PRODUCT
           </button>
@@ -82,6 +91,11 @@
               <select class="form-select form-select-sm" [(ngModel)]="editingProduct!.categoryId">
                 @for (category of categories; track category.id) {
                   <option [ngValue]="category.id">{{ category.name | uppercase }}</option>
+                }
+              </select>
+              <select class="form-select form-select-sm" [(ngModel)]="editingProduct!.gender">
+                @for (g of genderOptions; track g.value) {
+                  <option [ngValue]="g.value">{{ g.label | uppercase }}</option>
                 }
               </select>
               <div class="d-flex gap-2">

@@ -32,6 +32,13 @@ export class ProductService {
     return this.http.get<Product[]>(`${this.apiUrl}/search`, { params });
   }
 
+  filterProducts(categoryId?: number, gender?: string): Observable<Product[]> {
+    let params = new HttpParams();
+    if (categoryId != null) params = params.set('categoryId', categoryId.toString());
+    if (gender != null)     params = params.set('gender', gender);
+    return this.http.get<Product[]>(`${this.apiUrl}/filter`, { params });
+  }
+
   createProduct(data: NewProduct): Observable<Product> {
     return this.http.post<Product>(this.apiUrl, data);
   }

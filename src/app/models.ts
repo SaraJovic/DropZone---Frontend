@@ -41,6 +41,8 @@ export interface ProductVariant {
   stockQuantity: number;
 }
 
+export type Gender = 'MALE' | 'FEMALE' | 'UNISEX';
+
 export interface Product {
   id: number;
   name: string;
@@ -48,6 +50,7 @@ export interface Product {
   price: number;
   categoryId: number;
   categoryName: string;
+  gender: Gender;
   images: ProductImage[];
   variants: ProductVariant[];
 }
@@ -121,4 +124,5 @@ export interface NewProduct {
   description: string;
   price: number;
   categoryId: number | null;
+  gender: Gender | null;
 }

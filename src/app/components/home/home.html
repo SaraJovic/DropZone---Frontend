@@ -1,94 +1,126 @@
-<div class="hero-section">
-  <div class="hero-overlay"></div>
-  <div class="container hero-content">
-    <div class="badge-tag">New Season · SS26</div>
-    <h1 class="hero-title">Streets Before<br>Stadiums</h1>
-    <p class="hero-subtitle">No rules. Just us. Premium streetwear built for everyday culture.</p>
-    <div class="hero-actions">
-      <a routerLink="/products" class="btn-volt">Shop the Drop</a>
-      <a routerLink="/register" class="btn-volt-outline">Join the Club</a>
-    </div>
+<!-- ── TICKER TOP ─────────────────────────────────────────────── -->
+<div class="ticker-wrap ticker-red" aria-hidden="true">
+  <div class="ticker">
+    <span class="ticker-item">NEW DROP &nbsp;·&nbsp; LIMITED STOCK &nbsp;·&nbsp; FREE SHIPPING &nbsp;·&nbsp; </span>
+    <span class="ticker-item">NEW DROP &nbsp;·&nbsp; LIMITED STOCK &nbsp;·&nbsp; FREE SHIPPING &nbsp;·&nbsp; </span>
+    <span class="ticker-item">NEW DROP &nbsp;·&nbsp; LIMITED STOCK &nbsp;·&nbsp; FREE SHIPPING &nbsp;·&nbsp; </span>
+    <span class="ticker-item">NEW DROP &nbsp;·&nbsp; LIMITED STOCK &nbsp;·&nbsp; FREE SHIPPING &nbsp;·&nbsp; </span>
   </div>
 </div>
 
-<!-- Featured Products -->
-@if (featuredProducts.length > 0) {
-  <div class="home-section">
-    <div class="container">
-      <div class="section-header">
-        <span class="section-tag">Latest Drops</span>
-        <h2 class="section-title">Featured Pieces</h2>
-      </div>
-      <div class="row g-4 g-lg-5">
-        @for (product of featuredProducts; track product.id; let i = $index) {
-          <div class="col-sm-6 col-lg-4" appReveal [revealDelay]="i * 80">
-            <a [routerLink]="['/products', product.id]" class="product-card-link">
-              <div class="product-card">
-                <div class="product-image-wrapper">
-                  <img [src]="getPrimaryImage(product)" [alt]="product.name" class="product-image">
-                </div>
-                <div class="product-info">
-                  <h6 class="product-name">{{ product.name }}</h6>
-                  <div class="product-swatches">
-                    <span class="swatch swatch-dark"></span>
-                    <span class="swatch swatch-light"></span>
-                    <span class="swatch swatch-accent"></span>
-                  </div>
-                  <span class="product-price">${{ product.price }}</span>
-                </div>
-              </div>
-            </a>
-          </div>
-        }
-      </div>
-      <div class="text-center mt-5 pt-3">
-        <a routerLink="/products" class="btn-volt-outline">View All Products</a>
-      </div>
+<!-- ── HERO ──────────────────────────────────────────────────── -->
+<section class="hero-section">
+
+  <!-- Swap this div for a <video autoplay muted loop playsinline poster="..."> when asset is ready -->
+  <div class="hero-bg-wrap">
+    <div class="hero-bg-layer"></div>
+  </div>
+
+  <!-- Grain -->
+  <div class="hero-grain" aria-hidden="true"></div>
+
+  <!-- Cinematic gradient overlay -->
+  <div class="hero-overlay" aria-hidden="true"></div>
+
+  <div class="hero-content">
+    <div class="badge-tag">New Season &nbsp;·&nbsp; SS26</div>
+    <h1 class="hero-title">
+      NO RULES.<br>
+      <span class="hero-title-accent">JUST DROPS.</span>
+    </h1>
+    <p class="hero-subtitle">Premium streetwear built for everyday culture.</p>
+    <div class="hero-actions">
+      <a routerLink="/products" class="btn-hero">SHOP THE DROP</a>
     </div>
   </div>
+
+  <div class="hero-scroll-hint" aria-hidden="true">
+    <span class="scroll-label">SCROLL</span>
+    <div class="scroll-bar"></div>
+  </div>
+</section>
+
+<!-- ── TICKER BOTTOM ─────────────────────────────────────────── -->
+<div class="ticker-wrap ticker-dark" aria-hidden="true">
+  <div class="ticker ticker-reverse">
+    <span class="ticker-item">DROP 003 &nbsp;·&nbsp; COLLAB SERIES &nbsp;·&nbsp; SS26 COLLECTION &nbsp;·&nbsp; EXCLUSIVE RELEASE &nbsp;·&nbsp; </span>
+    <span class="ticker-item">DROP 003 &nbsp;·&nbsp; COLLAB SERIES &nbsp;·&nbsp; SS26 COLLECTION &nbsp;·&nbsp; EXCLUSIVE RELEASE &nbsp;·&nbsp; </span>
+    <span class="ticker-item">DROP 003 &nbsp;·&nbsp; COLLAB SERIES &nbsp;·&nbsp; SS26 COLLECTION &nbsp;·&nbsp; EXCLUSIVE RELEASE &nbsp;·&nbsp; </span>
+    <span class="ticker-item">DROP 003 &nbsp;·&nbsp; COLLAB SERIES &nbsp;·&nbsp; SS26 COLLECTION &nbsp;·&nbsp; EXCLUSIVE RELEASE &nbsp;·&nbsp; </span>
+  </div>
+</div>
+
+<!-- ── FEATURED DROPS ─────────────────────────────────────────── -->
+@if (featuredProducts.length > 0) {
+  <section class="drops-section">
+    <div class="drops-header" appReveal>
+      <span class="section-tag">Latest Drops</span>
+      <h2 class="section-title">Featured <em class="accent-word">Pieces</em></h2>
+    </div>
+
+    <div class="drops-bento">
+      @for (product of featuredProducts; track product.id; let i = $index) {
+        <a
+          [routerLink]="['/products', product.id]"
+          class="drop-card drop-card--{{ i }}"
+          appReveal
+          [revealDelay]="i * 100"
+        >
+          <div class="drop-img-wrap">
+            <img
+              [src]="getPrimaryImage(product)"
+              [alt]="product.name"
+              class="drop-img"
+              loading="lazy"
+            >
+            <div class="drop-hover-layer">
+              <span class="drop-cta-pill">VIEW DROP</span>
+            </div>
+          </div>
+          <div class="drop-meta">
+            <span class="drop-index">0{{ i + 1 }}</span>
+            <h6 class="drop-name">{{ product.name }}</h6>
+            <span class="drop-price">${{ product.price }}</span>
+          </div>
+        </a>
+      }
+    </div>
+
+    <div class="drops-footer" appReveal>
+      <a routerLink="/products" class="btn-volt-outline">View All Drops</a>
+    </div>
+  </section>
 }
 
-<!-- Collection Promo Banner -->
-<div class="promo-banner">
-  <div class="promo-banner-overlay"></div>
-  <div class="container promo-banner-content">
-    <span class="promo-tag">Capsule Collection</span>
-    <h2 class="promo-title">Urban Essentials<br>Restocked</h2>
-    <a routerLink="/products" class="promo-link">Explore Collection <i class="bi bi-arrow-right"></i></a>
+<!-- ── DROP ANNOUNCEMENT BANNER ──────────────────────────────── -->
+<div class="drop-banner" appReveal>
+  <div class="drop-banner-grain" aria-hidden="true"></div>
+  <div class="drop-banner-inner">
+    <span class="drop-banner-eyebrow">Available Now</span>
+    <h2 class="drop-banner-title">DROP 003<br><span class="drop-banner-dash">— AVAILABLE NOW</span></h2>
+    <a routerLink="/products" class="drop-banner-link">SHOP NOW <i class="bi bi-arrow-right"></i></a>
   </div>
 </div>
 
-<!-- Features -->
-<div class="light-section py-5">
-  <div class="container">
-    <div class="row g-4 text-center">
-      <div class="col-md-4" appReveal [revealDelay]="0">
-        <div class="dz-card p-5 h-100">
-          <div class="icon-wrapper">
-            <i class="bi bi-truck"></i>
-          </div>
-          <h5 class="feature-title">Free Shipping</h5>
-          <p class="feature-desc">Complimentary delivery on orders over $75. Tracked worldwide.</p>
-        </div>
-      </div>
-      <div class="col-md-4" appReveal [revealDelay]="100">
-        <div class="dz-card p-5 h-100">
-          <div class="icon-wrapper">
-            <i class="bi bi-shield-check"></i>
-          </div>
-          <h5 class="feature-title">Secure Checkout</h5>
-          <p class="feature-desc">Fully encrypted transactions with trusted payment partners.</p>
-        </div>
-      </div>
-      <div class="col-md-4" appReveal [revealDelay]="200">
-        <div class="dz-card p-5 h-100">
-          <div class="icon-wrapper">
-            <i class="bi bi-arrow-left-right"></i>
-          </div>
-          <h5 class="feature-title">Easy Returns</h5>
-          <p class="feature-desc">Hassle-free exchanges and returns within 30 days.</p>
-        </div>
-      </div>
+<!-- ── FEATURES ──────────────────────────────────────────────── -->
+<div class="features-strip">
+  <div class="features-inner">
+    <div class="feature-item" appReveal [revealDelay]="0">
+      <div class="feature-icon"><i class="bi bi-truck"></i></div>
+      <h5 class="feature-title">Free Shipping</h5>
+      <p class="feature-desc">Complimentary delivery on orders over $75. Tracked worldwide.</p>
+    </div>
+    <div class="feature-divider" aria-hidden="true"></div>
+    <div class="feature-item" appReveal [revealDelay]="100">
+      <div class="feature-icon"><i class="bi bi-shield-check"></i></div>
+      <h5 class="feature-title">Secure Checkout</h5>
+      <p class="feature-desc">Fully encrypted transactions with trusted payment partners.</p>
+    </div>
+    <div class="feature-divider" aria-hidden="true"></div>
+    <div class="feature-item" appReveal [revealDelay]="200">
+      <div class="feature-icon"><i class="bi bi-arrow-left-right"></i></div>
+      <h5 class="feature-title">Easy Returns</h5>
+      <p class="feature-desc">Hassle-free exchanges and returns within 30 days.</p>
     </div>
   </div>
 </div>

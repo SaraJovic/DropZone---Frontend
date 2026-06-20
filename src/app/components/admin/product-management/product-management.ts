@@ -28,8 +28,15 @@ export class ProductManagementComponent implements OnInit {
     name: '',
     description: '',
     price: 0,
-    categoryId: null
+    categoryId: null,
+    gender: null
   };
+
+  readonly genderOptions = [
+    { value: 'MALE',   label: 'Men' },
+    { value: 'FEMALE', label: 'Women' },
+    { value: 'UNISEX', label: 'Unisex' },
+  ];
 
   newVariant = {
     productId: null as number | null,
@@ -71,7 +78,7 @@ export class ProductManagementComponent implements OnInit {
   }
 
   createProduct(): void {
-    if (!this.newProduct.name || !this.newProduct.price || !this.newProduct.categoryId) {
+    if (!this.newProduct.name || !this.newProduct.price || !this.newProduct.categoryId || !this.newProduct.gender) {
       this.errorMessage = 'Please fill in all required fields';
       return;
     }
@@ -79,7 +86,7 @@ export class ProductManagementComponent implements OnInit {
       next: () => {
         this.successMessage = 'Product created successfully!';
         this.errorMessage = '';
-        this.newProduct = { name: '', description: '', price: 0, categoryId: null };
+        this.newProduct = { name: '', description: '', price: 0, categoryId: null, gender: null };
         this.loadProducts();
       },
       error: (err) => {

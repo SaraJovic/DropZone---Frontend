@@ -1,3 +1,4 @@
+<!-- Page Header -->
 <div class="page-header-section">
   <div class="container py-5">
     <div class="d-flex justify-content-between align-items-end flex-wrap gap-3">
@@ -10,75 +11,167 @@
   </div>
 </div>
 
-<div class="container pb-5">
-  <!-- Filters -->
-  <div class="filters-bar mb-5">
-    <div class="d-flex gap-3 flex-wrap">
-      <div class="search-wrapper flex-grow-1">
-        <i class="bi bi-search search-icon"></i>
-        <input type="text" class="form-control search-input" placeholder="Search products..."
-               [(ngModel)]="searchQuery" (keyup.enter)="onSearch()">
-      </div>
-      <select class="form-select category-select" [(ngModel)]="selectedCategory" (change)="onCategoryChange()">
-        <option [ngValue]="null">All Categories</option>
-        @for (category of categories; track category.id) {
-          <option [ngValue]="category.id">{{ category.name | uppercase }}</option>
-        }
-      </select>
-      <button class="btn-volt px-4" (click)="onSearch()">
-        Search
-      </button>
+<!-- Mobile filter toggle -->
+<div class="mobile-filter-bar d-lg-none">
+  <div class="container">
+    <button class="mobile-filter-btn" (click)="toggleMobileFilters()">
+      <i class="bi bi-sliders me-2"></i>FILTERS
+      @if (hasActiveFilters) {
+        <span class="filter-dot"></span>
+      }
+    </button>
+    <div class="search-wrapper flex-grow-1">
+      <i class="bi bi-search search-icon"></i>
+      <input
+        type="text"
+        class="form-control search-input"
+        placeholder="Search products..."
+        [(ngModel)]="searchQuery"
+        (keyup.enter)="onSearch()"
+      >
     </div>
   </div>
+</div>
 
-  <!-- Product Grid -->
-  <div class="row g-4 g-lg-5">
-    @for (product of products; track product.id; let i = $index) {
-      <div class="col-sm-6 col-lg-4" appReveal [revealDelay]="i * 70">
-        <a [routerLink]="['/products', product.id]" class="product-card-link">
-          <div class="product-card">
-            <div class="product-img-wrapper">
-              @if (product.images && product.images.length > 0) {
-                <img [src]="product.images[0].imageUrl" [alt]="product.name" class="product-img">
-              } @else {
-                <div class="product-no-img">
-                  <span>No Image</span>
-                </div>
-              }
-            </div>
-            <div class="product-info">
-              <span class="product-category">{{ product.categoryName | uppercase }}</span>
-              <h5 class="product-name">{{ product.name }}</h5>
-              <div class="product-swatches">
-                <span class="swatch swatch-dark"></span>
-                <span class="swatch swatch-light"></span>
-              </div>
-              <span class="product-price">${{ product.price }}</span>
-            </div>
-          </div>
-        </a>
+<!-- Mobile filter drawer backdrop -->
+@if (mobileFiltersOpen) {
+  <div class="filter-backdrop" (click)="closeMobileFilters()"></div>
+}
+
+<!-- Main layout -->
+<div class="container pb-5">
+  <div class="products-layout">
+
+    <!-- ── SIDEBAR ─────────────────────────────────────────── -->
+    <aside class="filter-sidebar" [class.open]="mobileFiltersOpen">
+
+      <div class="sidebar-header d-lg-none">
+        <span class="sidebar-title">FILTERS</span>
+        <button class="sidebar-close-btn" (click)="closeMobileFilters()">
+          <i class="bi bi-x-lg"></i>
+        </button>
       </div>
-    } @empty {
-      <div class="col-12">
-        <div class="empty-state">
-          <i class="bi bi-bag-x empty-icon"></i>
-          <h4>No Products Found</h4>
-          <p>Check back soon for new releases.</p>
+
+      <!-- Clear all -->
+      @if (hasActiveFilters) {
+        <div class="sidebar-clear">
+          <button class="clear-btn" (click)="clearFilters()">
+            <i class="bi bi-x-circle me-1"></i>Clear filters
+          </button>
+        </div>
+      }
+
+      <!-- Gender -->
+      <div class="filter-group">
+        <span class="filter-group-label">Gender</span>
+        <div class="filter-pills">
+          @for (g of genderOptions; track g.value) {
+            <button
+              class="filter-pill"
+              [class.active]="selectedGender === g.value"
+              (click)="setGender(g.value)"
+            >{{ g.label }}</button>
+          }
         </div>
       </div>
-    }
-  </div>
 
-  <!-- Pagination -->
-  @if (totalPages > 1) {
-    <div class="pagination-bar mt-5 pt-4">
-      <button class="btn-volt-outline px-4" (click)="prevPage()" [disabled]="currentPage === 0">
-        <i class="bi bi-arrow-left me-2"></i>Previous
-      </button>
-      <span class="pagination-info">{{ currentPage + 1 }} / {{ totalPages }}</span>
-      <button class="btn-volt-outline px-4" (click)="nextPage()" [disabled]="currentPage === totalPages - 1">
-        Next<i class="bi bi-arrow-right ms-2"></i>
-      </button>
+      <!-- Category -->
+      <div class="filter-group">
+        <span class="filter-group-label">Category</span>
+        <div class="filter-cat-list">
+          @for (cat of categories; track cat.id) {
+            <button
+              class="filter-cat-item"
+              [class.active]="selectedCategory === cat.id"
+              (click)="setCategory(cat.id)"
+            >
+              <span>{{ cat.name }}</span>
+              @if (selectedCategory === cat.id) {
+                <i class="bi bi-check2"></i>
+              }
+            </button>
+          }
+        </div>
+      </div>
+
+      <!-- Apply button on mobile -->
+      <div class="d-lg-none mt-4">
+        <button class="btn-volt w-100 py-3" (click)="closeMobileFilters()">
+          VIEW {{ products.length }} RESULTS
+        </button>
+      </div>
+    </aside>
+
+    <!-- ── PRODUCT GRID ────────────────────────────────────── -->
+    <div class="products-main">
+
+      <!-- Desktop search bar (hidden on mobile — shown in mobile-filter-bar instead) -->
+      <div class="desktop-search-bar d-none d-lg-flex mb-4">
+        <div class="search-wrapper flex-grow-1">
+          <i class="bi bi-search search-icon"></i>
+          <input
+            type="text"
+            class="form-control search-input"
+            placeholder="Search products..."
+            [(ngModel)]="searchQuery"
+            (keyup.enter)="onSearch()"
+          >
+        </div>
+        <button class="btn-volt px-4" (click)="onSearch()">SEARCH</button>
+      </div>
+
+      <!-- Grid -->
+      <div class="row g-4 g-lg-4">
+        @for (product of products; track product.id; let i = $index) {
+          <div class="col-6 col-md-4 col-xl-4" appReveal [revealDelay]="i * 60">
+            <a [routerLink]="['/products', product.id]" class="product-card-link">
+              <div class="product-card">
+                <div class="product-img-wrapper">
+                  @if (product.images && product.images.length > 0) {
+                    <img [src]="product.images[0].imageUrl" [alt]="product.name" class="product-img" loading="lazy">
+                  } @else {
+                    <div class="product-no-img"><span>No Image</span></div>
+                  }
+                  <span class="product-gender-badge">{{ product.gender }}</span>
+                </div>
+                <div class="product-info">
+                  <span class="product-category">{{ product.categoryName | uppercase }}</span>
+                  <h5 class="product-name">{{ product.name }}</h5>
+                  <div class="product-swatches">
+                    <span class="swatch swatch-dark"></span>
+                    <span class="swatch swatch-light"></span>
+                  </div>
+                  <span class="product-price">${{ product.price }}</span>
+                </div>
+              </div>
+            </a>
+          </div>
+        } @empty {
+          <div class="col-12">
+            <div class="empty-state">
+              <i class="bi bi-bag-x empty-icon"></i>
+              <h4>No Products Found</h4>
+              <p>Try adjusting your filters or check back soon for new drops.</p>
+              @if (hasActiveFilters) {
+                <button class="btn-volt-outline px-4 py-2 mt-3" (click)="clearFilters()">Clear All Filters</button>
+              }
+            </div>
+          </div>
+        }
+      </div>
+
+      <!-- Pagination (only visible when browsing unfiltered all-products) -->
+      @if (totalPages > 1) {
+        <div class="pagination-bar mt-5 pt-4">
+          <button class="btn-volt-outline px-4" (click)="prevPage()" [disabled]="currentPage === 0">
+            <i class="bi bi-arrow-left me-2"></i>Previous
+          </button>
+          <span class="pagination-info">{{ currentPage + 1 }} / {{ totalPages }}</span>
+          <button class="btn-volt-outline px-4" (click)="nextPage()" [disabled]="currentPage === totalPages - 1">
+            Next<i class="bi bi-arrow-right ms-2"></i>
+          </button>
+        </div>
+      }
     </div>
-  }
+  </div>
 </div>
