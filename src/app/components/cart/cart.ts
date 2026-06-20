@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { CartService } from '../../services/cart';
-import { AuthService } from '../../services/auth';
 import { Cart } from '../../models';
 
 @Component({
@@ -18,7 +17,6 @@ export class CartComponent implements OnInit {
 
   constructor(
     private cartService: CartService,
-    private authService: AuthService,
     private router: Router
   ) {}
 
@@ -33,6 +31,7 @@ export class CartComponent implements OnInit {
       },
       error: () => {
         this.cart = { id: 0, items: [], totalPrice: 0 };
+        this.cartService.resetCartCount();
       }
     });
   }

@@ -1,4 +1,4 @@
-<div class="dz-nav-wrapper">
+<div class="dz-nav-wrapper" [class.is-scrolled]="isScrolled">
   <div class="dz-utility-bar">
     <div class="container">
       <span class="dz-utility-text">FREE DELIVERY ON ORDERS OVER $75 &nbsp;·&nbsp; EASY 30-DAY RETURNS &nbsp;·&nbsp; NEW DROPS EVERY FRIDAY</span>
@@ -41,10 +41,10 @@
               </a>
             </li>
             <li class="nav-item position-relative">
-              <a class="nav-link dz-link" routerLink="/cart" routerLinkActive="active">
+              <a class="nav-link dz-link dz-cart-link" routerLink="/cart" routerLinkActive="active" [class.cart-bump]="cartBump">
                 <i class="bi bi-bag me-1"></i> Bag
                 @if (cartItemCount > 0) {
-                  <span class="cart-badge">{{ cartItemCount }}</span>
+                  <span class="cart-badge" [class.cart-badge-pop]="cartBump">{{ cartItemCount }}</span>
                 }
               </a>
             </li>

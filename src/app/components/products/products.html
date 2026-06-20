@@ -33,8 +33,8 @@
 
   <!-- Product Grid -->
   <div class="row g-4 g-lg-5">
-    @for (product of products; track product.id) {
-      <div class="col-sm-6 col-lg-4">
+    @for (product of products; track product.id; let i = $index) {
+      <div class="col-sm-6 col-lg-4" appReveal [revealDelay]="i * 70">
         <a [routerLink]="['/products', product.id]" class="product-card-link">
           <div class="product-card">
             <div class="product-img-wrapper">

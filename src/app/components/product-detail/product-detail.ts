@@ -6,6 +6,7 @@ import { ProductService } from '../../services/product';
 import { CartService } from '../../services/cart';
 import { WishlistService } from '../../services/wishlist';
 import { AuthService } from '../../services/auth';
+import { ToastService } from '../../services/toast';
 import { Product, ProductVariant } from '../../models';
 
 @Component({
@@ -18,6 +19,7 @@ import { Product, ProductVariant } from '../../models';
 export class ProductDetailComponent implements OnInit {
 
   product: Product | null = null;
+  isLoading = true;
   selectedVariant: ProductVariant | null = null;
   quantity = 1;
   successMessage = '';
@@ -30,6 +32,7 @@ export class ProductDetailComponent implements OnInit {
     private cartService: CartService,
     private wishlistService: WishlistService,
     private authService: AuthService,
+    private toastService: ToastService,
     private cdr: ChangeDetectorRef
   ) {}
 
@@ -39,6 +42,11 @@ export class ProductDetailComponent implements OnInit {
       this.productService.getProductById(+id).subscribe({
         next: (data) => {
           this.product = data;
+          this.isLoading = false;
+          this.cdr.markForCheck();
+        },
+        error: () => {
+          this.isLoading = false;
           this.cdr.markForCheck();
         }
       });
@@ -70,6 +78,7 @@ export class ProductDetailComponent implements OnInit {
       next: () => {
         this.successMessage = 'Added to cart!';
         this.errorMessage = '';
+        this.toastService.show('Added to your bag');
         this.cdr.markForCheck();
       },
       error: (err) => {
@@ -91,6 +100,7 @@ export class ProductDetailComponent implements OnInit {
         next: () => {
           this.successMessage = 'Added to wishlist!';
           this.errorMessage = '';
+          this.toastService.show('Saved to wishlist');
           this.cdr.markForCheck();
         },
         error: (err) => {

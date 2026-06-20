@@ -20,8 +20,8 @@
         <h2 class="section-title">Featured Pieces</h2>
       </div>
       <div class="row g-4 g-lg-5">
-        @for (product of featuredProducts; track product.id) {
-          <div class="col-sm-6 col-lg-4">
+        @for (product of featuredProducts; track product.id; let i = $index) {
+          <div class="col-sm-6 col-lg-4" appReveal [revealDelay]="i * 80">
             <a [routerLink]="['/products', product.id]" class="product-card-link">
               <div class="product-card">
                 <div class="product-image-wrapper">
@@ -62,7 +62,7 @@
 <div class="light-section py-5">
   <div class="container">
     <div class="row g-4 text-center">
-      <div class="col-md-4">
+      <div class="col-md-4" appReveal [revealDelay]="0">
         <div class="dz-card p-5 h-100">
           <div class="icon-wrapper">
             <i class="bi bi-truck"></i>
@@ -71,7 +71,7 @@
           <p class="feature-desc">Complimentary delivery on orders over $75. Tracked worldwide.</p>
         </div>
       </div>
-      <div class="col-md-4">
+      <div class="col-md-4" appReveal [revealDelay]="100">
         <div class="dz-card p-5 h-100">
           <div class="icon-wrapper">
             <i class="bi bi-shield-check"></i>
@@ -80,7 +80,7 @@
           <p class="feature-desc">Fully encrypted transactions with trusted payment partners.</p>
         </div>
       </div>
-      <div class="col-md-4">
+      <div class="col-md-4" appReveal [revealDelay]="200">
         <div class="dz-card p-5 h-100">
           <div class="icon-wrapper">
             <i class="bi bi-arrow-left-right"></i>

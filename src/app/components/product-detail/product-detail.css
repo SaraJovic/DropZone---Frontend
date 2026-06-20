@@ -231,6 +231,71 @@
   text-transform: uppercase;
 }
 
+.detail-fade-in {
+  animation: detail-fade-in 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes detail-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.detail-skeleton {
+  padding: 1rem 0;
+}
+
+.skeleton {
+  background: linear-gradient(90deg, var(--bg-alt) 25%, #ECEAE4 50%, var(--bg-alt) 75%);
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.4s ease-in-out infinite;
+  border-radius: var(--radius);
+}
+
+.skeleton-image {
+  aspect-ratio: 3/4;
+  width: 100%;
+}
+
+.skeleton-line {
+  height: 1.6rem;
+  margin-bottom: 1.2rem;
+  width: 70%;
+}
+
+.skeleton-line-sm {
+  width: 30%;
+  height: 1.2rem;
+}
+
+.skeleton-line-lg {
+  width: 85%;
+  height: 2.8rem;
+  margin-bottom: 2rem;
+}
+
+.skeleton-block {
+  height: 8rem;
+  margin: 2rem 0;
+  width: 100%;
+}
+
+.skeleton-btn {
+  height: 4.8rem;
+  width: 100%;
+  margin-top: 1rem;
+}
+
+@keyframes skeleton-shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
 @media (max-width: 767.98px) {
   .product-title {
     font-size: 2.4rem;

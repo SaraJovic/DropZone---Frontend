@@ -23,6 +23,18 @@
   z-index: 1;
   text-align: center;
   padding: 6rem 1.5rem;
+  animation: hero-enter 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes hero-enter {
+  from {
+    opacity: 0;
+    transform: translateY(32px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .badge-tag {
@@ -118,11 +130,13 @@
   background: var(--bg-base);
   border: none;
   overflow: hidden;
-  transition: var(--transition-smooth);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .product-card:hover {
-  transform: translateY(-2px);
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
 }
 
 .product-image-wrapper {

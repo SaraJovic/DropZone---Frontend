@@ -17,44 +17,75 @@
   }
 
   <div class="row g-4">
-    <!-- Left: Shipping Form -->
+    <!-- Left: Shipping or Payment -->
     <div class="col-lg-7">
-      <div class="checkout-card">
-        <div class="checkout-card-header">
-          <span class="section-tag">STEP 01</span>
-          <h5 class="checkout-card-title">SHIPPING DETAILS</h5>
-        </div>
-        <div class="checkout-card-body">
-          <label class="field-label">FULL SHIPPING ADDRESS</label>
-          <textarea class="form-control checkout-textarea" rows="4"
-            [(ngModel)]="shippingAddress"
-            placeholder="Street name, apartment, ZIP code, city, country...">
-          </textarea>
-          <div class="field-hint">
-            <i class="bi bi-shield-check me-1"></i>
-            Your address is encrypted and secure
+      @if (step === 'shipping') {
+        <div class="checkout-card">
+          <div class="checkout-card-header">
+            <span class="section-tag">STEP 01</span>
+            <h5 class="checkout-card-title">SHIPPING DETAILS</h5>
+          </div>
+          <div class="checkout-card-body">
+            <label class="field-label">FULL SHIPPING ADDRESS</label>
+            <textarea class="form-control checkout-textarea" rows="4"
+              [(ngModel)]="shippingAddress"
+              placeholder="Street name, apartment, ZIP code, city, country...">
+            </textarea>
+            <div class="field-hint">
+              <i class="bi bi-shield-check me-1"></i>
+              Your address is encrypted and secure
+            </div>
+          </div>
+          <div class="checkout-card-footer">
+            <button class="btn-volt w-100 py-3" (click)="placeOrder()" [disabled]="isLoading || !shippingAddress.trim()">
+              @if (isLoading) {
+                <span class="spinner-border spinner-border-sm me-2"></span>PLACING ORDER...
+              } @else {
+                <i class="bi bi-arrow-right me-2"></i>CONTINUE TO PAYMENT
+              }
+            </button>
+            <a routerLink="/cart" class="back-link">
+              <i class="bi bi-arrow-left me-1"></i>BACK TO CART
+            </a>
           </div>
         </div>
-        <div class="checkout-card-footer">
-          <button class="btn-volt w-100 py-3" (click)="placeOrder()" [disabled]="isLoading || !shippingAddress.trim()">
-            @if (isLoading) {
-              <span class="spinner-border spinner-border-sm me-2"></span>PLACING ORDER...
-            } @else {
-              <i class="bi bi-lock me-2"></i>PLACE ORDER
-            }
-          </button>
-          <a routerLink="/cart" class="back-link">
-            <i class="bi bi-arrow-left me-1"></i>BACK TO CART
-          </a>
+      }
+
+      @if (step === 'payment') {
+        <div class="checkout-card">
+          <div class="checkout-card-header">
+            <span class="section-tag">STEP 02</span>
+            <h5 class="checkout-card-title">PAYMENT DETAILS</h5>
+          </div>
+          <div class="checkout-card-body">
+            <label class="field-label">CARD INFORMATION</label>
+            <div #cardElement class="stripe-card-element"></div>
+            <div class="field-hint">
+              <i class="bi bi-shield-lock me-1"></i>
+              Test card: 4242 4242 4242 4242, any future date, any CVC
+            </div>
+          </div>
+          <div class="checkout-card-footer">
+            <button class="btn-volt w-100 py-3" (click)="confirmPayment()" [disabled]="isPaying">
+              @if (isPaying) {
+                <span class="spinner-border spinner-border-sm me-2"></span>PROCESSING PAYMENT...
+              } @else {
+                <i class="bi bi-lock me-2"></i>PAY ${{ createdOrder?.totalPrice }}
+              }
+            </button>
+            <a class="back-link" (click)="backToShipping()">
+              <i class="bi bi-arrow-left me-1"></i>BACK TO SHIPPING
+            </a>
+          </div>
         </div>
-      </div>
+      }
     </div>
 
     <!-- Right: Order Summary -->
     <div class="col-lg-5">
       <div class="checkout-card">
         <div class="checkout-card-header">
-          <span class="section-tag">STEP 02</span>
+          <span class="section-tag">SUMMARY</span>
           <h5 class="checkout-card-title">ORDER PREVIEW</h5>
         </div>
         <div class="checkout-card-body">

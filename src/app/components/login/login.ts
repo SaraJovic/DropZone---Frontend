@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../services/auth';
+import { CartService } from '../../services/cart';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
@@ -16,14 +17,19 @@ export class LoginComponent {
   password = '';
   errorMessage = '';
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(
+    private authService: AuthService,
+    private cartService: CartService,
+    private router: Router
+  ) {}
 
   onSubmit(): void {
     this.authService.login({ email: this.email, password: this.password }).subscribe({
       next: () => {
+        this.cartService.refreshCartCount().subscribe();
         this.router.navigate(['/']);
       },
-      error: (err) => {
+      error: () => {
         this.errorMessage = 'Invalid email or password';
       }
     });

@@ -515,3 +515,88 @@ a:hover {
 .auth-footer-text a:hover {
   color: var(--accent-red);
 }
+
+/* Motion & Interactivity */
+@media (prefers-reduced-motion: no-preference) {
+  ::view-transition-old(root) {
+    animation: dz-fade-out 0.18s ease forwards;
+  }
+
+  ::view-transition-new(root) {
+    animation: dz-fade-in 0.22s ease forwards;
+  }
+}
+
+@keyframes dz-fade-out {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+@keyframes dz-fade-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.page-enter {
+  animation: page-enter 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes page-enter {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.reveal-hidden {
+  opacity: 0;
+  transform: translateY(28px);
+  will-change: transform, opacity;
+}
+
+.reveal-visible {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.55s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-volt,
+.btn-volt-outline,
+.btn-danger-custom,
+.btn-primary,
+.btn-outline-primary,
+.dz-link-cta {
+  will-change: transform;
+}
+
+.btn-volt:active:not(:disabled),
+.btn-volt-outline:active:not(:disabled),
+.btn-danger-custom:active,
+.btn-primary:active:not(:disabled),
+.btn-outline-primary:active:not(:disabled),
+.dz-link-cta:active {
+  transform: scale(0.97);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page-enter,
+  .reveal-hidden,
+  .reveal-visible,
+  .hero-content,
+  .detail-fade-in {
+    animation: none !important;
+    transition: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none !important;
+  }
+}

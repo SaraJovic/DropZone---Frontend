@@ -226,3 +226,9 @@
   font-size: 3rem;
   color: var(--border-hover);
 }
+.stripe-card-element {
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius);
+  padding: 1.2rem;
+  background: var(--bg-surface);
+}

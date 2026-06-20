@@ -6,9 +6,11 @@ import { ProductService } from '../../services/product';
 import { CategoryService } from '../../services/category';
 import { Product, Category } from '../../models';
 
+import { RevealOnScrollDirective } from '../../directives/reveal-on-scroll';
+
 @Component({
   selector: 'app-products',
-  imports: [CommonModule, RouterLink, FormsModule],
+  imports: [CommonModule, RouterLink, FormsModule, RevealOnScrollDirective],
   templateUrl: './products.html',
   styleUrl: './products.css',
   changeDetection: ChangeDetectionStrategy.OnPush

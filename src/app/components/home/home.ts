@@ -4,9 +4,11 @@ import { CommonModule } from '@angular/common';
 import { ProductService } from '../../services/product';
 import { Product } from '../../models';
 
+import { RevealOnScrollDirective } from '../../directives/reveal-on-scroll';
+
 @Component({
   selector: 'app-home',
-  imports: [RouterLink, CommonModule],
+  imports: [RouterLink, CommonModule, RevealOnScrollDirective],
   templateUrl: './home.html',
   styleUrl: './home.css'
 })

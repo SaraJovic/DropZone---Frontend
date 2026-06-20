@@ -11,6 +11,7 @@
   padding: 0.8rem 0;
   font-size: 1.1rem;
   letter-spacing: 0.06em;
+  transition: padding 0.25s ease, font-size 0.25s ease;
 }
 
 .dz-utility-text {
@@ -23,12 +24,22 @@
   background: var(--bg-base) !important;
   border-bottom: 1px solid var(--border-subtle);
   padding: 1.2rem 0;
-  transition: box-shadow var(--transition-fast);
+  transition: padding 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
 }
 
-.dz-nav-wrapper.scrolled .dz-navbar,
-.dz-navbar:hover {
-  box-shadow: var(--shadow-sm);
+.dz-nav-wrapper.is-scrolled .dz-navbar {
+  padding: 0.8rem 0;
+  box-shadow: var(--shadow-md);
+  border-bottom-color: transparent;
+}
+
+.dz-nav-wrapper.is-scrolled .dz-brand {
+  font-size: 1.8rem;
+}
+
+.dz-nav-wrapper.is-scrolled .dz-utility-bar {
+  padding: 0.5rem 0;
+  font-size: 1rem;
 }
 
 .dz-brand {
@@ -39,7 +50,7 @@
   color: var(--text-heading) !important;
   text-transform: uppercase;
   text-decoration: none;
-  transition: var(--transition-fast);
+  transition: opacity var(--transition-fast), font-size 0.25s ease;
 }
 
 .dz-brand-accent {
@@ -139,6 +150,27 @@
   align-items: center;
   justify-content: center;
   line-height: 1;
+  transition: transform 0.2s ease;
+}
+
+.cart-badge-pop {
+  animation: badge-pop 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.dz-cart-link.cart-bump {
+  animation: cart-link-bump 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes badge-pop {
+  0% { transform: scale(1); }
+  40% { transform: scale(1.35); }
+  100% { transform: scale(1); }
+}
+
+@keyframes cart-link-bump {
+  0% { transform: scale(1); }
+  35% { transform: scale(1.08); }
+  100% { transform: scale(1); }
 }
 
 .dz-toggler {

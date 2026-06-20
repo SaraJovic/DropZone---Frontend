@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { AuthService } from '../../services/auth';
 import { CartService } from '../../services/cart';
 import { CommonModule } from '@angular/common';
 import { User } from '../../models';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-navbar',
@@ -11,8 +12,15 @@ import { User } from '../../models';
   templateUrl: './navbar.html',
   styleUrl: './navbar.css'
 })
-export class NavbarComponent implements OnInit {
+export class NavbarComponent implements OnInit, OnDestroy {
   cartItemCount = 0;
+  isScrolled = false;
+  cartBump = false;
+
+  private cartSub?: Subscription;
+  private previousCartCount = 0;
+  private cartInitialized = false;
+  private bumpTimeout?: ReturnType<typeof setTimeout>;
 
   constructor(
     private authService: AuthService,
@@ -21,18 +29,40 @@ export class NavbarComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.cartSub = this.cartService.cartCount$.subscribe((count) => {
+      if (this.cartInitialized && count > this.previousCartCount) {
+        this.triggerCartBump();
+      }
+      this.cartInitialized = true;
+      this.previousCartCount = count;
+      this.cartItemCount = count;
+    });
+
     if (this.isLoggedIn()) {
-      this.loadCartCount();
+      this.cartService.refreshCartCount().subscribe();
     }
   }
 
-  loadCartCount(): void {
-    this.cartService.getCart().subscribe({
-      next: (cart) => {
-        this.cartItemCount = cart.items.reduce((sum, item) => sum + item.quantity, 0);
-      },
-      error: () => {}
-    });
+  ngOnDestroy(): void {
+    this.cartSub?.unsubscribe();
+    if (this.bumpTimeout) {
+      clearTimeout(this.bumpTimeout);
+    }
+  }
+
+  @HostListener('window:scroll')
+  onWindowScroll(): void {
+    this.isScrolled = window.scrollY > 24;
+  }
+
+  triggerCartBump(): void {
+    this.cartBump = true;
+    if (this.bumpTimeout) {
+      clearTimeout(this.bumpTimeout);
+    }
+    this.bumpTimeout = setTimeout(() => {
+      this.cartBump = false;
+    }, 550);
   }
 
   isLoggedIn(): boolean {
@@ -48,6 +78,9 @@ export class NavbarComponent implements OnInit {
   }
 
   logout(): void {
+    this.cartService.resetCartCount();
+    this.previousCartCount = 0;
+    this.cartInitialized = false;
     this.authService.logout();
     this.router.navigate(['/']);
   }
