@@ -7,7 +7,8 @@ import { CartService } from '../../services/cart';
 import { WishlistService } from '../../services/wishlist';
 import { AuthService } from '../../services/auth';
 import { ToastService } from '../../services/toast';
-import { Product, ProductVariant } from '../../models';
+import { ReviewService } from '../../services/review';
+import { Product, ProductVariant, Review } from '../../models';
 
 @Component({
   selector: 'app-product-detail',
@@ -21,9 +22,18 @@ export class ProductDetailComponent implements OnInit {
   product: Product | null = null;
   isLoading = true;
   selectedVariant: ProductVariant | null = null;
+  selectedImageIndex = 0;
   quantity = 1;
   successMessage = '';
   errorMessage = '';
+
+  // Reviews
+  reviews: Review[] = [];
+  newRating = 0;
+  newComment = '';
+  reviewSuccessMessage = '';
+  reviewErrorMessage = '';
+  isSubmittingReview = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -33,6 +43,7 @@ export class ProductDetailComponent implements OnInit {
     private wishlistService: WishlistService,
     private authService: AuthService,
     private toastService: ToastService,
+    private reviewService: ReviewService,
     private cdr: ChangeDetectorRef
   ) {}
 
@@ -50,7 +61,72 @@ export class ProductDetailComponent implements OnInit {
           this.cdr.markForCheck();
         }
       });
+
+      this.loadReviews(+id);
     }
+  }
+
+  loadReviews(productId: number): void {
+    this.reviewService.getReviewsByProduct(productId).subscribe({
+      next: (data) => {
+        this.reviews = data;
+        this.cdr.markForCheck();
+      },
+      error: () => {
+        this.reviews = [];
+        this.cdr.markForCheck();
+      }
+    });
+  }
+
+  setRating(stars: number): void {
+    this.newRating = stars;
+    this.cdr.markForCheck();
+  }
+
+  submitReview(): void {
+    if (!this.authService.isLoggedIn()) {
+      this.router.navigate(['/login']);
+      return;
+    }
+
+    if (this.newRating === 0) {
+      this.reviewErrorMessage = 'Please select a rating';
+      this.reviewSuccessMessage = '';
+      this.cdr.markForCheck();
+      return;
+    }
+
+    if (!this.product) return;
+
+    this.isSubmittingReview = true;
+    this.reviewErrorMessage = '';
+
+    this.reviewService.createReview(this.product.id, {
+      rating: this.newRating,
+      comment: this.newComment
+    }).subscribe({
+      next: () => {
+        this.reviewSuccessMessage = 'Review submitted!';
+        this.reviewErrorMessage = '';
+        this.newRating = 0;
+        this.newComment = '';
+        this.isSubmittingReview = false;
+        this.loadReviews(this.product!.id);
+        this.cdr.markForCheck();
+      },
+      error: (err) => {
+        this.reviewErrorMessage = err.error?.message || 'Failed to submit review';
+        this.reviewSuccessMessage = '';
+        this.isSubmittingReview = false;
+        this.cdr.markForCheck();
+      }
+    });
+  }
+
+  selectImage(index: number): void {
+    this.selectedImageIndex = index;
+    this.cdr.markForCheck();
   }
 
   selectVariant(variant: ProductVariant): void {

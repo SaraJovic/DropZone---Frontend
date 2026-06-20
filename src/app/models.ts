@@ -126,3 +126,16 @@ export interface NewProduct {
   categoryId: number | null;
   gender: Gender | null;
 }
+
+export interface Review {
+  id: number;
+  rating: number;
+  comment: string;
+  userName: string;
+  createdAt: string;
+}
+
+export interface CreateReviewRequest {
+  rating: number;
+  comment: string;
+}
