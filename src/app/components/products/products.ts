@@ -21,6 +21,7 @@ export class ProductsComponent implements OnInit {
   searchQuery = '';
   selectedCategory: number | null = null;
   selectedGender: string | null = null;
+  sortBy = '';
   currentPage = 0;
   totalPages = 0;
   mobileFiltersOpen = false;
@@ -29,6 +30,14 @@ export class ProductsComponent implements OnInit {
     { value: 'MALE',   label: 'Men' },
     { value: 'FEMALE', label: 'Women' },
     { value: 'UNISEX', label: 'Unisex' },
+  ];
+
+  readonly sortOptions = [
+    { value: '', label: 'Default' },
+    { value: 'price,asc', label: 'Price: Low to High' },
+    { value: 'price,desc', label: 'Price: High to Low' },
+    { value: 'name,asc', label: 'Name: A to Z' },
+    { value: 'name,desc', label: 'Name: Z to A' },
   ];
 
   constructor(
@@ -51,7 +60,7 @@ export class ProductsComponent implements OnInit {
     });
   }
 
-  /** Main filter driver — called by every filter change except free-text search. */
+  
   applyFilters(): void {
     this.searchQuery = '';
     this.currentPage = 0;
@@ -61,11 +70,39 @@ export class ProductsComponent implements OnInit {
 
     this.productService.filterProducts(cat, gen).subscribe({
       next: (data) => {
-        this.products = data;
+        this.products = this.applySortToList(data);
         this.totalPages = 0;
         this.cdr.markForCheck();
       }
     });
+  }
+
+
+  applySortToList(list: Product[]): Product[] {
+    if (!this.sortBy) return list;
+
+    const [field, direction] = this.sortBy.split(',');
+    const sorted = [...list].sort((a, b) => {
+      let valA: string | number = field === 'price' ? a.price : a.name.toLowerCase();
+      let valB: string | number = field === 'price' ? b.price : b.name.toLowerCase();
+
+      if (valA < valB) return direction === 'asc' ? -1 : 1;
+      if (valA > valB) return direction === 'asc' ? 1 : -1;
+      return 0;
+    });
+
+    return sorted;
+  }
+
+  onSortChange(): void {
+    if (this.hasActiveFilters) {
+     
+      this.products = this.applySortToList(this.products);
+      this.cdr.markForCheck();
+    } else {
+     
+      this.loadPage();
+    }
   }
 
   setGender(value: string): void {
@@ -96,7 +133,7 @@ export class ProductsComponent implements OnInit {
     this.currentPage = 0;
     this.productService.searchProducts(q).subscribe({
       next: (data) => {
-        this.products = data;
+        this.products = this.applySortToList(data);
         this.totalPages = 0;
         this.cdr.markForCheck();
       }
@@ -117,10 +154,9 @@ export class ProductsComponent implements OnInit {
     this.cdr.markForCheck();
   }
 
-  /* Pagination only works with getAllProducts (paginated endpoint).
-     When filtering/searching the backend returns a flat array — pagination is hidden. */
+
   loadPage(): void {
-    this.productService.getAllProducts(this.currentPage).subscribe({
+    this.productService.getAllProducts(this.currentPage, 12, this.sortBy || undefined).subscribe({
       next: (data) => {
         this.products = data.content;
         this.totalPages = data.totalPages;

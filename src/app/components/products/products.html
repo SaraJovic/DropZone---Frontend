@@ -1,4 +1,4 @@
-<!-- Page Header -->
+
 <div class="page-header-section">
   <div class="container py-5">
     <div class="d-flex justify-content-between align-items-end flex-wrap gap-3">
@@ -11,7 +11,7 @@
   </div>
 </div>
 
-<!-- Mobile filter toggle -->
+
 <div class="mobile-filter-bar d-lg-none">
   <div class="container">
     <button class="mobile-filter-btn" (click)="toggleMobileFilters()">
@@ -33,16 +33,14 @@
   </div>
 </div>
 
-<!-- Mobile filter drawer backdrop -->
 @if (mobileFiltersOpen) {
   <div class="filter-backdrop" (click)="closeMobileFilters()"></div>
 }
 
-<!-- Main layout -->
 <div class="container pb-5">
   <div class="products-layout">
 
-    <!-- ── SIDEBAR ─────────────────────────────────────────── -->
+  
     <aside class="filter-sidebar" [class.open]="mobileFiltersOpen">
 
       <div class="sidebar-header d-lg-none">
@@ -52,7 +50,7 @@
         </button>
       </div>
 
-      <!-- Clear all -->
+  
       @if (hasActiveFilters) {
         <div class="sidebar-clear">
           <button class="clear-btn" (click)="clearFilters()">
@@ -61,7 +59,7 @@
         </div>
       }
 
-      <!-- Gender -->
+   
       <div class="filter-group">
         <span class="filter-group-label">Gender</span>
         <div class="filter-pills">
@@ -75,7 +73,7 @@
         </div>
       </div>
 
-      <!-- Category -->
+  
       <div class="filter-group">
         <span class="filter-group-label">Category</span>
         <div class="filter-cat-list">
@@ -94,7 +92,7 @@
         </div>
       </div>
 
-      <!-- Apply button on mobile -->
+
       <div class="d-lg-none mt-4">
         <button class="btn-volt w-100 py-3" (click)="closeMobileFilters()">
           VIEW {{ products.length }} RESULTS
@@ -102,10 +100,8 @@
       </div>
     </aside>
 
-    <!-- ── PRODUCT GRID ────────────────────────────────────── -->
     <div class="products-main">
 
-      <!-- Desktop search bar (hidden on mobile — shown in mobile-filter-bar instead) -->
       <div class="desktop-search-bar d-none d-lg-flex mb-4">
         <div class="search-wrapper flex-grow-1">
           <i class="bi bi-search search-icon"></i>
@@ -118,9 +114,15 @@
           >
         </div>
         <button class="btn-volt px-4" (click)="onSearch()">SEARCH</button>
+
+        <select class="form-select sort-select" [(ngModel)]="sortBy" (change)="onSortChange()">
+          @for (option of sortOptions; track option.value) {
+            <option [value]="option.value">{{ option.label }}</option>
+          }
+        </select>
       </div>
 
-      <!-- Grid -->
+   
       <div class="row g-4 g-lg-4">
         @for (product of products; track product.id; let i = $index) {
           <div class="col-6 col-md-4 col-xl-4" appReveal [revealDelay]="i * 60">
@@ -160,7 +162,6 @@
         }
       </div>
 
-      <!-- Pagination (only visible when browsing unfiltered all-products) -->
       @if (totalPages > 1) {
         <div class="pagination-bar mt-5 pt-4">
           <button class="btn-volt-outline px-4" (click)="prevPage()" [disabled]="currentPage === 0">

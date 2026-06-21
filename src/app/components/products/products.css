@@ -487,3 +487,8 @@
   opacity: 1;
   transform: translateY(0);
 }
+
+.sort-select {
+  max-width: 220px;
+  flex-shrink: 0;
+}

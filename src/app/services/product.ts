@@ -12,12 +12,17 @@ export class ProductService {
 
   constructor(private http: HttpClient) {}
 
-  getAllProducts(page: number = 0, size: number = 12): Observable<ProductPage> {
-    const params = new HttpParams()
+  getAllProducts(page: number = 0, size: number = 12, sort?: string): Observable<ProductPage> {
+    let params = new HttpParams()
       .set('page', page.toString())
       .set('size', size.toString());
+
+    if (sort) {
+      params = params.set('sort', sort);
+    }
+
     return this.http.get<ProductPage>(this.apiUrl, { params });
-  }
+}
 
   getProductById(id: number): Observable<Product> {
     return this.http.get<Product>(`${this.apiUrl}/${id}`);
