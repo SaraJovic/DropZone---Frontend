@@ -100,6 +100,12 @@ export interface Order {
   status: OrderStatus;
   shippingAddress: string;
   createdAt: string;
+  // Customer identity (populated by backend from Order.user)
+  customerFirstName?: string;
+  customerLastName?: string;
+  customerEmail?: string;
+  // Stripe traceability (null when order has no payment yet)
+  stripePaymentIntentId?: string;
 }
 
 export interface CreateOrderRequest {

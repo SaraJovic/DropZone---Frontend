@@ -42,6 +42,7 @@
     <table class="table table-hover mb-0">
       <thead>
         <tr>
+          <th style="width: 2.4rem;"></th>
           <th>ORDER ID</th>
           <th>CUSTOMER</th>
           <th>TOTAL</th>
@@ -52,13 +53,24 @@
       </thead>
       <tbody>
         @for (order of orders; track order.id) {
-          <tr>
+          <!-- Main row -->
+          <tr class="order-main-row" (click)="toggleOrder(order.id)" style="cursor:pointer;">
+            <td class="expand-cell">
+              <i class="bi"
+                 [class.bi-chevron-right]="expandedOrderId !== order.id"
+                 [class.bi-chevron-down]="expandedOrderId === order.id"></i>
+            </td>
             <td class="order-id">#{{ order.id }}</td>
-            <td class="customer-name">{{ order.user?.firstName }} {{ order.user?.lastName }}</td>
+            <td class="customer-name">
+              {{ order.customerFirstName }} {{ order.customerLastName }}
+              @if (order.customerEmail) {
+                <span class="customer-email d-block">{{ order.customerEmail }}</span>
+              }
+            </td>
             <td class="order-total">${{ order.totalPrice }}</td>
             <td><span [class]="getStatusClass(order.status)">{{ order.status }}</span></td>
             <td class="order-date">{{ order.createdAt | date:'mediumDate' | uppercase }}</td>
-            <td>
+            <td (click)="$event.stopPropagation()">
               <div class="d-flex justify-content-end">
                 <select class="form-select form-select-sm status-select"
                   (change)="handleStatusChange(order.id, $event)">
@@ -72,6 +84,59 @@
               </div>
             </td>
           </tr>
+
+          <!-- Expanded detail row -->
+          @if (expandedOrderId === order.id) {
+            <tr class="order-detail-row">
+              <td colspan="7" class="order-detail-cell">
+                <div class="order-detail-panel">
+
+                  <!-- Line items -->
+                  <div class="detail-section">
+                    <span class="detail-section-label">LINE ITEMS</span>
+                    <div class="items-table">
+                      <div class="items-table-head">
+                        <span>PRODUCT</span>
+                        <span>SIZE</span>
+                        <span>COLOR</span>
+                        <span>QTY</span>
+                        <span class="text-end">PRICE AT PURCHASE</span>
+                      </div>
+                      @for (item of order.items; track item.id) {
+                        <div class="items-table-row">
+                          <span class="item-name">{{ item.productName }}</span>
+                          <span class="item-meta">{{ item.size | uppercase }}</span>
+                          <span class="item-meta">{{ item.color | uppercase }}</span>
+                          <span class="item-meta">× {{ item.quantity }}</span>
+                          <span class="item-price text-end">${{ item.priceAtPurchase }}</span>
+                        </div>
+                      }
+                    </div>
+                  </div>
+
+                  <!-- Meta grid -->
+                  <div class="detail-meta-grid">
+                    <div class="detail-meta-item">
+                      <span class="meta-label">SHIPPING ADDRESS</span>
+                      <span class="meta-value">{{ order.shippingAddress }}</span>
+                    </div>
+                    @if (order.stripePaymentIntentId) {
+                      <div class="detail-meta-item">
+                        <span class="meta-label">STRIPE PAYMENT ID</span>
+                        <span class="meta-value stripe-id">{{ order.stripePaymentIntentId }}</span>
+                      </div>
+                    } @else {
+                      <div class="detail-meta-item">
+                        <span class="meta-label">STRIPE PAYMENT ID</span>
+                        <span class="meta-value meta-empty">No payment recorded</span>
+                      </div>
+                    }
+                  </div>
+
+                </div>
+              </td>
+            </tr>
+          }
         }
       </tbody>
     </table>

@@ -31,6 +31,7 @@
   color: var(--text-heading);
 }
 
+/* ── Stat cards ─────────────────────────────────────────────── */
 .stat-card {
   background: var(--bg-base);
   border: 1px solid var(--border-subtle);
@@ -39,9 +40,7 @@
   transition: var(--transition-smooth);
 }
 
-.stat-card:hover {
-  box-shadow: var(--shadow-sm);
-}
+.stat-card:hover { box-shadow: var(--shadow-sm); }
 
 .stat-card-accent {
   border-color: var(--text-heading) !important;
@@ -82,11 +81,23 @@
   color: var(--text-heading);
 }
 
+/* ── Orders table ────────────────────────────────────────────── */
 .admin-table-wrapper {
   background: var(--bg-base);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius);
   overflow: hidden;
+}
+
+.expand-cell {
+  color: var(--text-body);
+  font-size: 1.2rem;
+  width: 2.4rem;
+  padding-right: 0 !important;
+}
+
+.order-main-row:hover {
+  background: var(--bg-surface) !important;
 }
 
 .order-id {
@@ -101,6 +112,15 @@
   font-size: 1.1rem;
   font-weight: 700;
   color: var(--text-heading);
+}
+
+.customer-email {
+  font-family: var(--font-body-family);
+  font-size: 1.1rem;
+  font-weight: 400;
+  text-transform: none;
+  color: var(--text-body);
+  margin-top: 0.15rem;
 }
 
 .order-total {
@@ -120,3 +140,142 @@
   font-family: var(--font-body-family) !important;
   font-size: 1.2rem !important;
 }
+
+/* ── Expanded detail panel ───────────────────────────────────── */
+.order-detail-row {
+  background: var(--bg-surface) !important;
+}
+
+.order-detail-cell {
+  padding: 0 !important;
+  border-top: none !important;
+}
+
+.order-detail-panel {
+  padding: 2.4rem 3.2rem;
+  border-top: 1px solid var(--border-subtle);
+  display: flex;
+  flex-direction: column;
+  gap: 2.4rem;
+}
+
+.detail-section-label {
+  display: block;
+  font-family: var(--font-heading-family);
+  font-size: 1rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-body);
+  margin-bottom: 1.2rem;
+}
+
+/* Line items mini-table */
+.items-table {
+  border: 1px solid var(--border-subtle);
+  overflow: hidden;
+}
+
+.items-table-head,
+.items-table-row {
+  display: grid;
+  grid-template-columns: 3fr 1fr 1fr 0.6fr 1.2fr;
+  gap: 1.2rem;
+  padding: 0.9rem 1.4rem;
+  align-items: center;
+}
+
+.items-table-head {
+  background: var(--bg-alt);
+  font-family: var(--font-heading-family);
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-body);
+}
+
+.items-table-row {
+  border-top: 1px solid var(--border-subtle);
+  background: var(--bg-base);
+}
+
+.item-name {
+  font-family: var(--font-heading-family);
+  font-size: 1.2rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--text-heading);
+}
+
+.item-meta {
+  font-size: 1.2rem;
+  color: var(--text-body);
+  font-family: var(--font-body-family);
+}
+
+.item-price {
+  font-family: var(--font-heading-family);
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--text-heading);
+}
+
+/* Meta grid (shipping + stripe) */
+.detail-meta-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.6rem;
+}
+
+.detail-meta-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.meta-label {
+  font-family: var(--font-heading-family);
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-body);
+}
+
+.meta-value {
+  font-size: 1.3rem;
+  color: var(--text-heading);
+  font-family: var(--font-body-family);
+  word-break: break-all;
+}
+
+.stripe-id {
+  font-family: monospace;
+  font-size: 1.15rem;
+  color: var(--text-body);
+}
+
+.meta-empty {
+  color: var(--border-hover);
+  font-style: italic;
+}
+
+/* Badge statuses */
+.badge-status {
+  display: inline-block;
+  font-family: var(--font-heading-family);
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.35rem 0.9rem;
+  border-radius: var(--radius);
+}
+
+.bg-pending    { background: #FFF3CD; color: #856404; }
+.bg-processing { background: #CCE5FF; color: #004085; }
+.bg-shipped    { background: #D4EDDA; color: #155724; }
+.bg-delivered  { background: #D1ECF1; color: #0C5460; }
+.bg-cancelled  { background: #F8D7DA; color: #721C24; }

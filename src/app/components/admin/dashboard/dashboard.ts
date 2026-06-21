@@ -14,6 +14,7 @@ export class DashboardComponent implements OnInit {
 
   orders: Order[] = [];
   totalRevenue = 0;
+  expandedOrderId: number | null = null;
 
   constructor(private orderService: OrderService) {}
 
@@ -28,6 +29,10 @@ export class DashboardComponent implements OnInit {
         this.totalRevenue = data.reduce((sum: number, order: Order) => sum + order.totalPrice, 0);
       }
     });
+  }
+
+  toggleOrder(orderId: number): void {
+    this.expandedOrderId = this.expandedOrderId === orderId ? null : orderId;
   }
 
   handleStatusChange(orderId: number, event: Event): void {
@@ -47,12 +52,12 @@ export class DashboardComponent implements OnInit {
 
   getStatusClass(status: string): string {
     switch (status) {
-      case 'PENDING': return 'badge-status bg-pending';
+      case 'PENDING':    return 'badge-status bg-pending';
       case 'PROCESSING': return 'badge-status bg-processing';
-      case 'SHIPPED': return 'badge-status bg-shipped';
-      case 'DELIVERED': return 'badge-status bg-delivered';
-      case 'CANCELLED': return 'badge-status bg-cancelled';
-      default: return 'badge-status bg-secondary';
+      case 'SHIPPED':    return 'badge-status bg-shipped';
+      case 'DELIVERED':  return 'badge-status bg-delivered';
+      case 'CANCELLED':  return 'badge-status bg-cancelled';
+      default:           return 'badge-status bg-secondary';
     }
   }
 }
