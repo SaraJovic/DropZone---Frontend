@@ -35,6 +35,10 @@ export class ProductDetailComponent implements OnInit {
   reviewErrorMessage = '';
   isSubmittingReview = false;
 
+  get isAdmin(): boolean {
+    return this.authService.isAdmin();
+  }
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -75,6 +79,18 @@ export class ProductDetailComponent implements OnInit {
       error: () => {
         this.reviews = [];
         this.cdr.markForCheck();
+      }
+    });
+  }
+
+  deleteReview(reviewId: number): void {
+    this.reviewService.deleteReview(reviewId).subscribe({
+      next: () => {
+        this.reviews = this.reviews.filter(r => r.id !== reviewId);
+        this.cdr.markForCheck();
+      },
+      error: () => {
+        // silently fail — admin-only action, unlikely to need UX messaging here
       }
     });
   }

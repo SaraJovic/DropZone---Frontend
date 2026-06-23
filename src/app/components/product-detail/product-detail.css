@@ -345,7 +345,7 @@
   font-family: var(--font-heading-family, inherit);
   font-weight: 900;
   text-transform: uppercase;
-  font-size: 1.3rem;
+  font-size: 2.4rem;
   letter-spacing: 0.04em;
   color: var(--text-heading);
   margin-bottom: 2.4rem;
@@ -359,7 +359,7 @@
 }
 
 .review-card {
-  padding: 1rem;
+  padding: 2rem;
   border: 1px solid var(--border-subtle, #e5e3dd);
   border-radius: var(--radius, 4px);
 }
@@ -374,13 +374,13 @@
 
 .review-stars {
   color: #f5b400;
-  font-size: 0.85rem;
+  font-size: 1.6rem;
 }
 
 .review-author {
   font-family: var(--font-heading-family);
   font-weight: 700;
-  font-size: 0.9rem;
+  font-size: 1.4rem;
   text-transform: uppercase;
   letter-spacing: 0.04em;
   color: var(--text-heading);
@@ -388,13 +388,29 @@
 
 .review-date {
   color: var(--text-body, #6b6b6b);
-  font-size: 0.8rem;
+  font-size: 1.2rem;
   margin-left: auto;
+}
+
+.review-delete-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-body);
+  font-size: 1.3rem;
+  cursor: pointer;
+  padding: 0.2rem 0.4rem;
+  border-radius: var(--radius);
+  transition: var(--transition-fast);
+  line-height: 1;
+}
+
+.review-delete-btn:hover {
+  color: var(--color-critical);
 }
 
 .review-comment {
   margin: 0;
-  font-size: 0.9rem;
+  font-size: 1.5rem;
   line-height: 1.65;
   color: var(--text-body, #6b6b6b);
 }
@@ -402,18 +418,18 @@
 .no-reviews-text {
   color: var(--text-body, #6b6b6b);
   font-style: italic;
-  font-size: 1.5rem;
+  font-size: 1.6rem;
   margin-bottom: 2.4rem;
 }
 
 /* "Leave a Review" heading — scoped so it doesn't affect other .block-label uses */
 .add-review-form .block-label {
-  font-size: 1.1rem;
+  font-size: 1.6rem;
   letter-spacing: 0.06em;
 }
 
 .star-input {
-  font-size: 1.5rem;
+  font-size: 2.4rem;
   color: #f5b400;
   display: flex;
   gap: 0.5rem;

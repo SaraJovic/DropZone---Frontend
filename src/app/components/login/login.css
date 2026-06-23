@@ -2,6 +2,18 @@
   box-shadow: var(--shadow-md) !important;
 }
 
+.forgot-link {
+  font-family: var(--font-body-family);
+  font-size: 1.2rem;
+  color: var(--text-body);
+  text-decoration: none;
+  transition: var(--transition-fast);
+}
+
+.forgot-link:hover {
+  color: var(--text-heading);
+}
+
 .auth-page {
   background: var(--bg-surface);
   min-height: calc(100vh - 200px);

@@ -114,6 +114,11 @@
                 </div>
                 <span class="review-author">{{ review.userName }}</span>
                 <span class="review-date">{{ review.createdAt | date:'mediumDate' }}</span>
+                @if (isAdmin) {
+                  <button class="review-delete-btn" (click)="deleteReview(review.id)" title="Delete review">
+                    <i class="bi bi-trash3"></i>
+                  </button>
+                }
               </div>
               @if (review.comment) {
                 <p class="review-comment">{{ review.comment }}</p>

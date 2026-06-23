@@ -51,4 +51,12 @@ export class AuthService {
     const user = localStorage.getItem('user');
     return user ? JSON.parse(user) as User : null;
   }
+
+  forgotPassword(email: string): Observable<string> {
+    return this.http.post(`${this.apiUrl}/forgot-password`, { email }, { responseType: 'text' });
+  }
+
+  resetPassword(token: string, newPassword: string): Observable<string> {
+    return this.http.post(`${this.apiUrl}/reset-password`, { token, newPassword }, { responseType: 'text' });
+  }
 }

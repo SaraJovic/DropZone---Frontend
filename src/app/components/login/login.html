@@ -16,6 +16,9 @@
           <div class="mb-4">
             <label class="form-label auth-label">Password</label>
             <input type="password" class="form-control" [(ngModel)]="password" name="password" placeholder="Enter your password" required>
+            <div class="text-end mt-1">
+              <a routerLink="/forgot-password" class="forgot-link">Forgot password?</a>
+            </div>
           </div>
           <button type="submit" class="btn-volt w-100 mt-2">Sign In</button>
         </form>
