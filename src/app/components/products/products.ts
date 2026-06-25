@@ -116,11 +116,12 @@ export class ProductsComponent implements OnInit {
   }
 
   clearFilters(): void {
-    this.selectedGender = null;
-    this.selectedCategory = null;
-    this.searchQuery = '';
-    this.applyFilters();
-  }
+  this.selectedGender = null;
+  this.selectedCategory = null;
+  this.searchQuery = '';
+  this.currentPage = 0;
+  this.loadPage();
+}
 
   onSearch(): void {
     const q = this.searchQuery.trim();

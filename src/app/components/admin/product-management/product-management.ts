@@ -66,10 +66,10 @@ export class ProductManagementComponent implements OnInit {
   }
 
   loadProducts(): void {
-    this.productService.getAllProducts().subscribe({
-      next: (data) => { this.products = data.content; }
-    });
-  }
+  this.productService.getAllProducts(0, 50).subscribe({
+    next: (data) => { this.products = data.content; }
+  });
+}
 
   loadCategories(): void {
     this.categoryService.getAllCategories().subscribe({
